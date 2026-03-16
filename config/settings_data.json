@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "favicon": "",
@@ -8,7 +17,31 @@
     "color_button": "#1a1a1a",
     "social_instagram": "",
     "social_tiktok": "",
-    "social_youtube": ""
+    "social_youtube": "",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_text": "AURA",
+          "menu": "main-menu",
+          "show_account": true
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "logo_text": "AURA",
+          "tagline": "Premium athletic apparel. Designed in Athens, GR.",
+          "newsletter_heading": "Join the movement.",
+          "newsletter_subtext": "Early access, training content, and stories from athletes who refuse to settle.",
+          "instagram_url": "",
+          "tiktok_url": "",
+          "strava_url": "",
+          "youtube_url": ""
+        }
+      }
+    },
+    "content_for_index": []
   },
   "presets": {}
 }
