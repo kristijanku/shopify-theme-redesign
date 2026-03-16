@@ -1,0 +1,182 @@
+<footer id="footer">
+  <div class="footer-newsletter">
+    <div class="footer-nl-inner">
+      <div>
+        <div class="text-label" style="margin-bottom:0.75rem;">Newsletter</div>
+        <h2 class="text-h3" style="font-weight:200; font-style:italic; font-size:clamp(1.8rem,3vw,2.8rem);">
+          {{- section.settings.newsletter_heading | default: 'Join the<br>movement.' -}}
+        </h2>
+        <p style="margin-top:1rem; font-size:0.875rem; color:rgba(26,26,26,0.5); max-width:32ch; line-height:1.7;">
+          {{ section.settings.newsletter_subtext | default: 'Early access, training content, and stories from athletes who refuse to settle.' }}
+        </p>
+      </div>
+      <div class="footer-nl-form">
+        {% form 'customer' %}
+          {%- if form.posted_successfully? -%}
+            <p style="font-size:0.875rem; color:#1a6e3a; margin-bottom:1rem;">Thanks for subscribing!</p>
+          {%- else -%}
+            {%- if form.errors -%}
+              <p style="font-size:0.875rem; color:#c0392b; margin-bottom:0.5rem;">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</p>
+            {%- endif -%}
+          {%- endif -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="footer-input-wrap">
+            <input class="footer-input" type="email" name="contact[email]" placeholder="Your email address" required>
+            <button class="footer-submit" type="submit" aria-label="Subscribe">→</button>
+          </div>
+          <p class="footer-privacy">By subscribing you agree to our Privacy Policy. No spam — ever.</p>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-logo-col">
+      <a href="{{ shop.url }}" class="footer-logo">{{ section.settings.logo_text | default: shop.name | upcase }}</a>
+      <div class="footer-tagline">{{ section.settings.tagline | default: 'Premium athletic apparel.<br>Designed in Athens, GR.' }}</div>
+    </div>
+
+    {%- if linklists['footer-shop'] != blank -%}
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          {%- for link in linklists['footer-shop'].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- else -%}
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="{{ routes.collections_url }}/all">All Products</a></li>
+          <li><a href="{{ routes.collections_url }}/new-arrivals">New Arrivals</a></li>
+          <li><a href="{{ routes.collections_url }}/compression">Compression</a></li>
+          <li><a href="{{ routes.collections_url }}/training">Training</a></li>
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if linklists['footer-company'] != blank -%}
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          {%- for link in linklists['footer-company'].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- else -%}
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="{{ routes.root_url }}pages/our-story">Our Story</a></li>
+          <li><a href="{{ routes.root_url }}pages/athletes">Athletes</a></li>
+          <li><a href="{{ routes.root_url }}pages/sustainability">Sustainability</a></li>
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if linklists['footer-support'] != blank -%}
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          {%- for link in linklists['footer-support'].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- else -%}
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="{{ routes.root_url }}pages/sizing-guide">Sizing Guide</a></li>
+          <li><a href="{{ routes.root_url }}policies/refund-policy">Returns</a></li>
+          <li><a href="{{ routes.root_url }}policies/shipping-policy">Shipping</a></li>
+          <li><a href="{{ routes.root_url }}pages/contact">Contact</a></li>
+        </ul>
+      </div>
+    {%- endif -%}
+
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <ul>
+        {%- if section.settings.instagram_url != blank -%}
+          <li><a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">Instagram</a></li>
+        {%- endif -%}
+        {%- if section.settings.tiktok_url != blank -%}
+          <li><a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener">TikTok</a></li>
+        {%- endif -%}
+        {%- if section.settings.strava_url != blank -%}
+          <li><a href="{{ section.settings.strava_url }}" target="_blank" rel="noopener">Strava</a></li>
+        {%- endif -%}
+        {%- if section.settings.youtube_url != blank -%}
+          <li><a href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener">YouTube</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-legal">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+    <p>
+      {%- for policy in shop.policies -%}
+        {%- if policy != blank -%}
+          <a href="{{ policy.url }}">{{ policy.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "AURA"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Premium athletic apparel. Designed in Athens, GR."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter heading",
+      "default": "Join the movement."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_subtext",
+      "label": "Newsletter subtext",
+      "default": "Early access, training content, and stories from athletes who refuse to settle."
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "url",
+      "id": "strava_url",
+      "label": "Strava URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    }
+  ]
+}
+{% endschema %}

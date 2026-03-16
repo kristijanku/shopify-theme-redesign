@@ -1,0 +1,269 @@
+<section id="reviews">
+  <div class="reveal">
+    <div class="text-label" style="margin-bottom:0.75rem;">{{ section.settings.label | default: 'Reviews' }}</div>
+    <h2 class="text-h2">{{ section.settings.heading | default: 'Trusted by<br><em>2,400+ athletes.</em>' }}</h2>
+  </div>
+  <div class="reviews-layout">
+    <div class="reviews-score-block reveal">
+      <div class="score-num">{{ section.settings.score | default: '4.8' }}</div>
+      <div class="score-stars">★★★★★</div>
+      <div class="score-count">{{ section.settings.score_count | default: 'Based on 2,400+ verified reviews' }}</div>
+      <div class="dist-bars">
+        <div class="dist-row">
+          <div class="dist-star">5★</div>
+          <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:{{ section.settings.pct_5 | default: 82 }}%"></div></div>
+          <div class="dist-pct">{{ section.settings.pct_5 | default: 82 }}%</div>
+        </div>
+        <div class="dist-row">
+          <div class="dist-star">4★</div>
+          <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:{{ section.settings.pct_4 | default: 12 }}%"></div></div>
+          <div class="dist-pct">{{ section.settings.pct_4 | default: 12 }}%</div>
+        </div>
+        <div class="dist-row">
+          <div class="dist-star">3★</div>
+          <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:{{ section.settings.pct_3 | default: 4 }}%"></div></div>
+          <div class="dist-pct">{{ section.settings.pct_3 | default: 4 }}%</div>
+        </div>
+        <div class="dist-row">
+          <div class="dist-star">2★</div>
+          <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:{{ section.settings.pct_2 | default: 1 }}%"></div></div>
+          <div class="dist-pct">{{ section.settings.pct_2 | default: 1 }}%</div>
+        </div>
+        <div class="dist-row">
+          <div class="dist-star">1★</div>
+          <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:{{ section.settings.pct_1 | default: 1 }}%"></div></div>
+          <div class="dist-pct">{{ section.settings.pct_1 | default: 1 }}%</div>
+        </div>
+      </div>
+      {%- if section.settings.press_1 != blank or section.settings.press_2 != blank -%}
+        <div class="press-row">
+          <div class="press-label">As featured in</div>
+          <div class="press-names">
+            {%- if section.settings.press_1 != blank -%}<div class="press-name">{{ section.settings.press_1 }}</div>{%- endif -%}
+            {%- if section.settings.press_2 != blank -%}<div class="press-name">{{ section.settings.press_2 }}</div>{%- endif -%}
+            {%- if section.settings.press_3 != blank -%}<div class="press-name">{{ section.settings.press_3 }}</div>{%- endif -%}
+            {%- if section.settings.press_4 != blank -%}<div class="press-name">{{ section.settings.press_4 }}</div>{%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="reviews-cards">
+      {%- if section.settings.review_1_body != blank -%}
+        <div class="review-card reveal">
+          <div class="review-header">
+            <div class="review-avatar">{{ section.settings.review_1_initials | default: 'AM' }}</div>
+            <div class="review-meta">
+              <div class="review-author">{{ section.settings.review_1_author | default: 'Alex M.' }}</div>
+              <div class="review-location">{{ section.settings.review_1_location | default: 'Athens, GR' }}</div>
+              <span class="review-verified">Verified Buyer</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <p class="review-body">{{ section.settings.review_1_body }}</p>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.review_2_body != blank -%}
+        <div class="review-card reveal reveal-delay-1">
+          <div class="review-header">
+            <div class="review-avatar">{{ section.settings.review_2_initials | default: 'JK' }}</div>
+            <div class="review-meta">
+              <div class="review-author">{{ section.settings.review_2_author | default: 'Jordan K.' }}</div>
+              <div class="review-location">{{ section.settings.review_2_location | default: 'London, UK' }}</div>
+              <span class="review-verified">Verified Buyer</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <p class="review-body">{{ section.settings.review_2_body }}</p>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.review_3_body != blank -%}
+        <div class="review-card reveal reveal-delay-2">
+          <div class="review-header">
+            <div class="review-avatar">{{ section.settings.review_3_initials | default: 'SP' }}</div>
+            <div class="review-meta">
+              <div class="review-author">{{ section.settings.review_3_author | default: 'Sam P.' }}</div>
+              <div class="review-location">{{ section.settings.review_3_location | default: 'New York, US' }}</div>
+              <span class="review-verified">Verified Buyer</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <p class="review-body">{{ section.settings.review_3_body }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Reviews"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (HTML allowed)",
+      "default": "Trusted by<br><em>2,400+ athletes.</em>"
+    },
+    {
+      "type": "text",
+      "id": "score",
+      "label": "Score",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "score_count",
+      "label": "Score count text",
+      "default": "Based on 2,400+ verified reviews"
+    },
+    {
+      "type": "range",
+      "id": "pct_5",
+      "label": "5★ percentage",
+      "min": 0,
+      "max": 100,
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "pct_4",
+      "label": "4★ percentage",
+      "min": 0,
+      "max": 100,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "pct_3",
+      "label": "3★ percentage",
+      "min": 0,
+      "max": 100,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "pct_2",
+      "label": "2★ percentage",
+      "min": 0,
+      "max": 100,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "pct_1",
+      "label": "1★ percentage",
+      "min": 0,
+      "max": 100,
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "press_1",
+      "label": "Press mention 1",
+      "default": "Runner's World"
+    },
+    {
+      "type": "text",
+      "id": "press_2",
+      "label": "Press mention 2",
+      "default": "Men's Health"
+    },
+    {
+      "type": "text",
+      "id": "press_3",
+      "label": "Press mention 3",
+      "default": "Wired"
+    },
+    {
+      "type": "text",
+      "id": "press_4",
+      "label": "Press mention 4",
+      "default": "GQ"
+    },
+    {
+      "type": "text",
+      "id": "review_1_initials",
+      "label": "Review 1 initials",
+      "default": "AM"
+    },
+    {
+      "type": "text",
+      "id": "review_1_author",
+      "label": "Review 1 author",
+      "default": "Alex M."
+    },
+    {
+      "type": "text",
+      "id": "review_1_location",
+      "label": "Review 1 location",
+      "default": "Athens, GR"
+    },
+    {
+      "type": "textarea",
+      "id": "review_1_body",
+      "label": "Review 1 body",
+      "default": "Hands down the best training gear I've ever owned. The compression is unlike anything I've tried — supportive where it needs to be, completely invisible when you're in flow."
+    },
+    {
+      "type": "text",
+      "id": "review_2_initials",
+      "label": "Review 2 initials",
+      "default": "JK"
+    },
+    {
+      "type": "text",
+      "id": "review_2_author",
+      "label": "Review 2 author",
+      "default": "Jordan K."
+    },
+    {
+      "type": "text",
+      "id": "review_2_location",
+      "label": "Review 2 location",
+      "default": "London, UK"
+    },
+    {
+      "type": "textarea",
+      "id": "review_2_body",
+      "label": "Review 2 body",
+      "default": "The compression is exactly right — supportive but never restrictive. I do Olympic lifting and I've never found tights that allow this depth in the squat while still giving me that mid-section support."
+    },
+    {
+      "type": "text",
+      "id": "review_3_initials",
+      "label": "Review 3 initials",
+      "default": "SP"
+    },
+    {
+      "type": "text",
+      "id": "review_3_author",
+      "label": "Review 3 author",
+      "default": "Sam P."
+    },
+    {
+      "type": "text",
+      "id": "review_3_location",
+      "label": "Review 3 location",
+      "default": "New York, US"
+    },
+    {
+      "type": "textarea",
+      "id": "review_3_body",
+      "label": "Review 3 body",
+      "default": "I've tried every brand. Nothing comes close to Aura for quality. After six months of hard use, the fabric hasn't pilled, the seams are perfect, and the fit is exactly what it was on day one."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews"
+    }
+  ]
+}
+{% endschema %}

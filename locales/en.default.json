@@ -1,0 +1,55 @@
+{
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "open_nav": "Open navigation",
+    "close_nav": "Close navigation",
+    "open_cart": "Open cart",
+    "close": "Close"
+  },
+  "general": {
+    "continue_shopping": "Continue shopping",
+    "view_all": "View all"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "checkout": "Checkout",
+    "update": "Update cart",
+    "subtotal": "Subtotal",
+    "remove": "Remove",
+    "shipping_notice": "Shipping and taxes calculated at checkout."
+  },
+  "product": {
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "view_full_details": "View full details",
+    "quantity": "Quantity",
+    "description": "Description"
+  },
+  "collections": {
+    "all_products": "All products",
+    "no_products": "No products found"
+  },
+  "search": {
+    "placeholder": "Search products...",
+    "results": "Search results for",
+    "no_results": "No results found"
+  },
+  "newsletter": {
+    "label": "Email",
+    "placeholder": "Your email address",
+    "submit": "Subscribe",
+    "success": "Thanks for subscribing!",
+    "error": "Please enter a valid email address."
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Your %{shop} gift card for %{value}"
+    }
+  }
+}

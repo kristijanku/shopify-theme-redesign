@@ -1,0 +1,72 @@
+<div class="cart-page">
+  <h1 class="cart-title">Your Cart</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty">
+      <p style="margin-bottom:1.5rem;">Your cart is empty.</p>
+      <a href="{{ routes.collections_url }}/all" class="btn-primary">
+        Continue Shopping
+        <span class="btn-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  {%- else -%}
+    {% form 'cart', cart %}
+      {%- for item in cart.items -%}
+        <div class="cart-item">
+          <div class="cart-item-image">
+            {%- if item.image != blank -%}
+              {{ item.image | image_url: width: 200 | image_tag: alt: item.image.alt, loading: 'lazy' }}
+            {%- else -%}
+              <img src="https://placehold.co/200x200/F2EFE9/1a1a1a?text={{ item.title | url_encode }}" alt="{{ item.title }}"/>
+            {%- endif -%}
+          </div>
+          <div>
+            <div class="cart-item-title">{{ item.product.title }}</div>
+            {%- unless item.variant.title == 'Default Title' -%}
+              <div class="cart-item-variant">{{ item.variant.title }}</div>
+            {%- endunless -%}
+            <div class="cart-item-price">{{ item.final_price | money }}</div>
+            <div class="cart-qty">
+              <button type="button" class="cart-qty-btn" data-action="minus">−</button>
+              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" style="width:32px; text-align:center; border:none; background:none; font-size:0.9rem;">
+              <button type="button" class="cart-qty-btn" data-action="plus">+</button>
+            </div>
+            <button type="submit" name="updates[]" value="0" class="cart-remove" formnovalidate onclick="this.closest('form').querySelector('input[name=\\\"updates[]\\\"]').value=0; this.closest('form').submit();">Remove</button>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'PPEditorialNew',Georgia,serif; font-weight:200; font-size:1.1rem;">{{ item.final_line_price | money }}</div>
+          </div>
+        </div>
+      {%- endfor -%}
+
+      <div class="cart-footer">
+        <div class="cart-subtotal">
+          <span>Subtotal</span>{{ cart.total_price | money }}
+        </div>
+        <p style="font-size:0.78rem; color:rgba(26,26,26,0.45);">Shipping and taxes calculated at checkout.</p>
+        <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+          <button type="submit" name="update" class="btn-secondary">Update cart</button>
+          <a href="{{ routes.checkout }}" class="btn-primary">
+            Checkout
+            <span class="btn-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    {% endform %}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

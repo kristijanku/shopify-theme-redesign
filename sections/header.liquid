@@ -1,0 +1,90 @@
+{%- liquid
+  assign main_menu = linklists[section.settings.menu]
+-%}
+
+<div id="nav">
+  <div class="nav-pill">
+    <!-- Desktop nav -->
+    <div class="nav-desktop" style="display:contents;">
+      <a href="{{ shop.url }}" class="nav-logo">{{ section.settings.logo_text | default: shop.name | upcase }}</a>
+      {%- if main_menu != blank -%}
+        <ul class="nav-links">
+          {%- for link in main_menu.links -%}
+            <li>
+              <a href="{{ link.url }}"{% if link.active %} class="active"{% endif %}>{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      <div class="nav-actions">
+        {%- if section.settings.show_account and shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}" class="nav-signup">Account</a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" class="nav-login" style="position:relative;">
+          Cart
+          {%- if cart.item_count > 0 -%}
+            <span style="position:absolute;top:-6px;right:-6px;background:#FDFBF7;color:#1a1a1a;font-size:0.6rem;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile nav -->
+    <div class="nav-mobile">
+      <button class="nav-hamburger" aria-label="Menu" onclick="toggleMobileNav()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <a href="{{ shop.url }}" class="nav-logo">{{ section.settings.logo_text | default: shop.name | upcase }}</a>
+      <a href="{{ routes.cart_url }}" class="nav-cart-mobile" aria-label="Cart" style="position:relative;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span style="position:absolute;top:2px;right:2px;background:#1a1a1a;color:#FDFBF7;font-size:0.55rem;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+  </div>
+
+  <div class="nav-drawer" id="navDrawer" style="background:rgba(253,251,247,0.95); border-radius:0 0 1.5rem 1.5rem; margin-top:-0.5rem; padding-top:0.75rem;">
+    {%- for link in main_menu.links -%}
+      <a href="{{ link.url }}" onclick="toggleMobileNav()">{{ link.title }}</a>
+    {%- endfor -%}
+    {%- if section.settings.show_account and shop.customer_accounts_enabled -%}
+      <a href="{{ routes.account_url }}" style="border-bottom:none; font-weight:400; font-family:system-ui; font-size:0.875rem;">Account</a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "AURA",
+      "info": "Leave blank to use shop name"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account link",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

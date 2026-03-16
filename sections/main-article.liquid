@@ -1,0 +1,17 @@
+<div class="page-content">
+  <div class="text-label" style="margin-bottom:0.75rem;">{{ blog.title }}</div>
+  <h1>{{ article.title }}</h1>
+  <p style="font-size:0.78rem; color:rgba(26,26,26,0.4); margin:0.75rem 0 2rem;">{{ article.published_at | date: '%B %d, %Y' }}</p>
+  {%- if article.image != blank -%}
+    <div style="border-radius:1rem; overflow:hidden; margin-bottom:2.5rem; aspect-ratio:16/9;">
+      {{ article.image | image_url: width: 1200 | image_tag: alt: article.image.alt }}
+    </div>
+  {%- endif -%}
+  <div class="rte">{{ article.content }}</div>
+  <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid rgba(26,26,26,0.08);">
+    <a href="{{ blog.url }}" class="btn-secondary">← Back to {{ blog.title }}</a>
+  </div>
+</div>
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

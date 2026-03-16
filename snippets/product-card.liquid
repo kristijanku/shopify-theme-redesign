@@ -1,0 +1,20 @@
+{% comment %}
+  Renders a product card for collection grid.
+  Usage: {% render 'product-card', product: product %}
+{% endcomment %}
+<a href="{{ product.url }}" class="collection-product-card" style="text-decoration:none; color:inherit;">
+  <div class="collection-product-card-image">
+    {%- if product.featured_image != blank -%}
+      {{ product.featured_image | image_url: width: 600 | image_tag: alt: product.featured_image.alt, loading: 'lazy' }}
+    {%- else -%}
+      <img src="https://placehold.co/400x533/F2EFE9/1a1a1a?text={{ product.title | url_encode }}" alt="{{ product.title }}" loading="lazy"/>
+    {%- endif -%}
+  </div>
+  <div class="collection-product-card-title">{{ product.title }}</div>
+  <div class="collection-product-card-price">
+    {%- if product.compare_at_price > product.price -%}
+      <span style="text-decoration:line-through; opacity:0.45; margin-right:0.35rem;">{{ product.compare_at_price | money }}</span>
+    {%- endif -%}
+    {{ product.price | money }}
+  </div>
+</a>

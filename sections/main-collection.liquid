@@ -1,0 +1,59 @@
+<div class="collection-page">
+  <div class="collection-header reveal">
+    <div class="text-label" style="margin-bottom:0.75rem;">Collection</div>
+    <h1 class="collection-title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p style="margin-top:1rem; font-size:0.95rem; line-height:1.7; color:rgba(26,26,26,0.6); max-width:60ch;">{{ collection.description }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- paginate collection.products by 12 -%}
+    <div class="collection-grid">
+      {%- for product in collection.products -%}
+        <a href="{{ product.url }}" class="collection-product-card" style="text-decoration:none; color:inherit;">
+          <div class="collection-product-card-image">
+            {%- if product.featured_image != blank -%}
+              {{ product.featured_image | image_url: width: 600 | image_tag: alt: product.featured_image.alt, loading: 'lazy' }}
+            {%- else -%}
+              <img src="https://placehold.co/400x533/F2EFE9/1a1a1a?text={{ product.title | url_encode }}" alt="{{ product.title }}" loading="lazy"/>
+            {%- endif -%}
+          </div>
+          <div class="collection-product-card-title">{{ product.title }}</div>
+          <div class="collection-product-card-price">
+            {%- if product.compare_at_price > product.price -%}
+              <span style="text-decoration:line-through; opacity:0.45; margin-right:0.35rem;">{{ product.compare_at_price | money }}</span>
+            {%- endif -%}
+            {{ product.price | money }}
+          </div>
+        </a>
+      {%- else -%}
+        <p style="color:rgba(26,26,26,0.45); grid-column:1/-1; padding:2rem 0;">No products found in this collection.</p>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <div class="pagination">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}">←</a>
+        {%- endif -%}
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          {%- else -%}
+            <span class="current">{{ part.title }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}">→</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}

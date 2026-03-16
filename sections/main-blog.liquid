@@ -1,0 +1,36 @@
+<div class="collection-page">
+  <div class="collection-header reveal">
+    <div class="text-label" style="margin-bottom:0.75rem;">Blog</div>
+    <h1 class="collection-title">{{ blog.title }}</h1>
+  </div>
+  {%- paginate blog.articles by 9 -%}
+    <div class="collection-grid">
+      {%- for article in blog.articles -%}
+        <a href="{{ article.url }}" style="text-decoration:none; color:inherit;" class="collection-product-card">
+          <div class="collection-product-card-image">
+            {%- if article.image != blank -%}
+              {{ article.image | image_url: width: 600 | image_tag: alt: article.image.alt, loading: 'lazy' }}
+            {%- else -%}
+              <img src="https://placehold.co/400x300/F2EFE9/1a1a1a?text={{ article.title | url_encode }}" alt="{{ article.title }}" loading="lazy"/>
+            {%- endif -%}
+          </div>
+          <div class="collection-product-card-title">{{ article.title }}</div>
+          <div class="collection-product-card-price">{{ article.published_at | date: '%B %d, %Y' }}</div>
+        </a>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <div class="pagination">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">←</a>{%- endif -%}
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>
+          {%- else -%}<span class="current">{{ part.title }}</span>{%- endif -%}
+        {%- endfor -%}
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">→</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+{% schema %}
+{ "name": "Blog", "settings": [] }
+{% endschema %}

@@ -1,0 +1,34 @@
+<div class="collection-page">
+  <div class="collection-header reveal">
+    <div class="text-label" style="margin-bottom:0.75rem;">Search</div>
+    {%- if search.performed -%}
+      <h1 class="collection-title">{{ search.results_count }} results for "{{ search.terms | escape }}"</h1>
+    {%- else -%}
+      <h1 class="collection-title">Search</h1>
+    {%- endif -%}
+    <form action="{{ routes.search_url }}" method="get" style="margin-top:1.5rem; display:flex; gap:0.75rem; align-items:center; border-bottom:1px solid rgba(26,26,26,0.2); padding-bottom:0.75rem; max-width:500px;">
+      <input type="text" name="q" value="{{ search.terms | escape }}" placeholder="Search products..." style="flex:1; border:none; background:none; outline:none; font-size:1rem; color:#1a1a1a; font-family:system-ui;">
+      <button type="submit" class="btn-secondary">Search</button>
+    </form>
+  </div>
+  {%- if search.performed -%}
+    {%- if search.results_count > 0 -%}
+      <div class="collection-grid">
+        {%- for result in search.results -%}
+          {%- if result.object_type == 'product' -%}
+            {% render 'product-card', product: result %}
+          {%- else -%}
+            <a href="{{ result.url }}" style="text-decoration:none; color:inherit;">
+              <div class="collection-product-card-title">{{ result.title }}</div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p style="color:rgba(26,26,26,0.45); padding:2rem 0;">No results found for "{{ search.terms | escape }}".</p>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}

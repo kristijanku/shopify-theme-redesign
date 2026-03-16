@@ -1,0 +1,127 @@
+<section id="athletes" style="background:#FDFBF7;">
+  <div class="athletes-header reveal">
+    <div class="text-label" style="margin-bottom:0.75rem;">{{ section.settings.label | default: 'Athletes' }}</div>
+    <h2 class="text-h2" style="max-width:22ch;">{{ section.settings.heading | default: 'Our athletes represent us with their<br><em>life, spirit, and dedication.</em>' }}</h2>
+  </div>
+  <div class="athletes-grid">
+    {%- for i in (1..4) -%}
+      {%- assign name_key = 'athlete_' | append: i | append: '_name' -%}
+      {%- assign disc_key = 'athlete_' | append: i | append: '_discipline' -%}
+      {%- assign img_key = 'athlete_' | append: i | append: '_image' -%}
+      {%- assign name = section.settings[name_key] -%}
+      {%- assign disc = section.settings[disc_key] -%}
+      {%- assign img = section.settings[img_key] -%}
+      {%- assign delay_class = '' -%}
+      {%- if i == 2 -%}{%- assign delay_class = 'reveal-delay-1' -%}{%- endif -%}
+      {%- if i == 3 -%}{%- assign delay_class = 'reveal-delay-2' -%}{%- endif -%}
+      {%- if i == 4 -%}{%- assign delay_class = 'reveal-delay-3' -%}{%- endif -%}
+      <div class="athlete-card reveal {{ delay_class }}">
+        {%- if img != blank -%}
+          {{ img | image_url: width: 500 | image_tag: alt: name }}
+        {%- else -%}
+          <img src="https://placehold.co/400x600/1e1e1c/fdfbf7?text={{ name | url_encode | default: 'Athlete' }}" alt="{{ name | default: 'Athlete' }}" loading="lazy"/>
+        {%- endif -%}
+        <div class="athlete-overlay">
+          <div class="athlete-name">{{ name | default: 'Athlete Name' }}</div>
+          <div class="athlete-discipline">{{ disc | default: 'Discipline' }}</div>
+        </div>
+        <div class="athlete-always-label" style="display:block; pointer-events:none;">
+          <div class="athlete-always-name">{{ name | default: 'Athlete Name' }}</div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Athletes",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Athletes"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (HTML allowed)",
+      "default": "Our athletes represent us with their<br><em>life, spirit, and dedication.</em>"
+    },
+    {
+      "type": "image_picker",
+      "id": "athlete_1_image",
+      "label": "Athlete 1 image"
+    },
+    {
+      "type": "text",
+      "id": "athlete_1_name",
+      "label": "Athlete 1 name",
+      "default": "Maria Polypou"
+    },
+    {
+      "type": "text",
+      "id": "athlete_1_discipline",
+      "label": "Athlete 1 discipline",
+      "default": "Sprinter — 100m / 200m"
+    },
+    {
+      "type": "image_picker",
+      "id": "athlete_2_image",
+      "label": "Athlete 2 image"
+    },
+    {
+      "type": "text",
+      "id": "athlete_2_name",
+      "label": "Athlete 2 name",
+      "default": "Nikos Papadakis"
+    },
+    {
+      "type": "text",
+      "id": "athlete_2_discipline",
+      "label": "Athlete 2 discipline",
+      "default": "Triathlete — Ironman Series"
+    },
+    {
+      "type": "image_picker",
+      "id": "athlete_3_image",
+      "label": "Athlete 3 image"
+    },
+    {
+      "type": "text",
+      "id": "athlete_3_name",
+      "label": "Athlete 3 name",
+      "default": "Sofia Alexiou"
+    },
+    {
+      "type": "text",
+      "id": "athlete_3_discipline",
+      "label": "Athlete 3 discipline",
+      "default": "Ultra Trail — UTMB"
+    },
+    {
+      "type": "image_picker",
+      "id": "athlete_4_image",
+      "label": "Athlete 4 image"
+    },
+    {
+      "type": "text",
+      "id": "athlete_4_name",
+      "label": "Athlete 4 name",
+      "default": "Dimitri Kounellis"
+    },
+    {
+      "type": "text",
+      "id": "athlete_4_discipline",
+      "label": "Athlete 4 discipline",
+      "default": "Olympic Weightlifter"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Athletes"
+    }
+  ]
+}
+{% endschema %}

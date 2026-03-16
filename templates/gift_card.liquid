@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ 'gift_cards.issued.title' | t: value: gift_card.initial_value | money_without_trailing_zeros, shop: shop.name }}</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #FDFBF7; color: #1a1a1a; }
+    .gift-card { max-width: 480px; margin: 5rem auto; padding: 2rem; text-align: center; }
+    h1 { font-family: Georgia, serif; font-weight: 200; font-size: 2rem; margin-bottom: 1rem; }
+    .gift-card-code { font-size: 1.5rem; letter-spacing: 0.2em; background: #F2EFE9; padding: 1rem 2rem; border-radius: 0.75rem; margin: 1.5rem 0; display: inline-block; }
+    .gift-card-amount { font-size: 1.1rem; color: rgba(26,26,26,0.55); margin-bottom: 1rem; }
+    a { color: #1a1a1a; }
+  </style>
+</head>
+<body>
+  <div class="gift-card">
+    <h1>{{ shop.name }} Gift Card</h1>
+    <div class="gift-card-amount">{{ gift_card.initial_value | money_without_trailing_zeros }}</div>
+    {%- if gift_card.enabled -%}
+      <div class="gift-card-code">{{ gift_card.code | format_code }}</div>
+      <p style="font-size:0.875rem; color:rgba(26,26,26,0.45); margin-bottom:1.5rem;">Balance: {{ gift_card.balance | money }}</p>
+    {%- else -%}
+      <p style="color:#c0392b;">This gift card has been disabled.</p>
+    {%- endif -%}
+    <a href="{{ shop.url }}">Continue shopping →</a>
+  </div>
+</body>
+</html>

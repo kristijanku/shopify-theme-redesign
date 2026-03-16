@@ -1,0 +1,92 @@
+<section id="community">
+  <div class="community-header reveal">
+    <div>
+      <div class="text-label" style="margin-bottom:0.5rem;">{{ section.settings.label | default: 'Community' }}</div>
+      <h2 class="text-h2">{{ section.settings.heading | default: 'The movement,<br><em>in motion.</em>' }}</h2>
+    </div>
+    {%- if section.settings.instagram_label != blank -%}
+      <a href="{{ section.settings.instagram_url | default: '#' }}" class="btn-secondary" target="_blank" rel="noopener">{{ section.settings.instagram_label }} →</a>
+    {%- endif -%}
+  </div>
+  <div class="community-masonry reveal reveal-delay-1">
+    {%- for i in (1..6) -%}
+      {%- assign img_key = 'image_' | append: i -%}
+      {%- assign img = section.settings[img_key] -%}
+      <div class="community-item">
+        {%- if img != blank -%}
+          {{ img | image_url: width: 600 | image_tag: alt: img.alt, loading: 'lazy' }}
+        {%- else -%}
+          {%- assign placeholders = '400x520,2a2a26,fdfbf7,Training|400x380,e8e4dc,1a1a1a,Race Day|400x460,d4cdc4,1a1a1a,Recovery|400x340,1a1a1a,fdfbf7,Athens|400x500,f2efe9,1a1a1a,Athlete Life|400x360,2a2a20,fdfbf7,Discipline' | split: '|' -%}
+          {%- assign ph = placeholders[i | minus: 1] | split: ',' -%}
+          <img src="https://placehold.co/{{ ph[0] }}/{{ ph[1] }}/{{ ph[2] }}?text={{ ph[3] | url_encode }}" alt="{{ ph[3] }}" loading="lazy"/>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Community",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Community"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (HTML allowed)",
+      "default": "The movement,<br><em>in motion.</em>"
+    },
+    {
+      "type": "text",
+      "id": "instagram_label",
+      "label": "Instagram handle label",
+      "default": "@auraathletics"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Image 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_6",
+      "label": "Image 6"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Community"
+    }
+  ]
+}
+{% endschema %}

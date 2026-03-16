@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FDFBF7">
+
+  <title>
+    {%- if page_title == blank -%}
+      {{ shop.name }}
+    {%- else -%}
+      {{ page_title }} — {{ shop.name }}
+    {%- endif -%}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  <!-- Canonical -->
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- DM Sans — body font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <!-- PPEditorialNew — editorial/display font (loaded via asset_url) -->
+  <style>
+    @font-face {
+      font-family: 'PPEditorialNew';
+      src: url('{{ "PPEditorialNew-Ultralight.otf" | asset_url }}') format('opentype');
+      font-weight: 200;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'PPEditorialNew';
+      src: url('{{ "PPEditorialNew-UltralightItalic.otf" | asset_url }}') format('opentype');
+      font-weight: 200;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'PPEditorialNew';
+      src: url('{{ "PPEditorialNew-Regular.otf" | asset_url }}') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'PPEditorialNew';
+      src: url('{{ "PPEditorialNew-Italic.otf" | asset_url }}') format('opentype');
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'PPEditorialNew';
+      src: url('{{ "PPEditorialNew-Ultrabold.otf" | asset_url }}') format('opentype');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+
+  <!-- Theme CSS -->
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}
+</head>
+
+<body>
+  <!-- Skip to content -->
+  <a class="visually-hidden" href="#MainContent">Skip to content</a>
+
+  <!-- Header (rendered as a standalone section) -->
+  {% section 'header' %}
+
+  <!-- Main content -->
+  <main id="MainContent" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  <!-- Footer (rendered as a standalone section) -->
+  {% section 'footer' %}
+
+  <!-- Theme JS -->
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+</body>
+</html>

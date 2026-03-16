@@ -1,0 +1,78 @@
+<section id="stats">
+  <div class="stats-inner">
+    {%- assign stat_values = section.settings.stat_1_value | append: '|' | append: section.settings.stat_2_value | append: '|' | append: section.settings.stat_3_value | append: '|' | append: section.settings.stat_4_value | split: '|' -%}
+    {%- assign stat_labels = section.settings.stat_1_label | append: '|' | append: section.settings.stat_2_label | append: '|' | append: section.settings.stat_3_label | append: '|' | append: section.settings.stat_4_label | split: '|' -%}
+
+    {%- for i in (0..3) -%}
+      {%- assign val = stat_values[i] -%}
+      {%- assign lbl = stat_labels[i] -%}
+      {%- if val != blank and lbl != blank -%}
+        <div class="stat-item">
+          <div class="stat-value">{{ val }}</div>
+          <div class="stat-label">{{ lbl }}</div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stats Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "stat_1_value",
+      "label": "Stat 1 value",
+      "default": "10,000+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "Athletes Worldwide"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_value",
+      "label": "Stat 2 value",
+      "default": "4.9★"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "Average Rating"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_value",
+      "label": "Stat 3 value",
+      "default": "30"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "Days Free Returns"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_value",
+      "label": "Stat 4 value",
+      "default": "Athens"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Stat 4 label",
+      "default": "Designed & Tested"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stats Bar"
+    }
+  ]
+}
+{% endschema %}

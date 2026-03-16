@@ -1,0 +1,108 @@
+<section id="sustainability">
+  <div class="sustainability-inner">
+    <div class="sustain-image-stack reveal">
+      {%- if section.settings.image_back != blank -%}
+        {{ section.settings.image_back | image_url: width: 600 | image_tag: alt: section.settings.image_back.alt, class: 'sustain-img-back' }}
+      {%- else -%}
+        <img class="sustain-img-back" src="https://placehold.co/500x660/c8c4bc/1a1a1a?text=Responsible+Sourcing" alt="Responsible sourcing" loading="lazy"/>
+      {%- endif -%}
+      {%- if section.settings.image_front != blank -%}
+        {{ section.settings.image_front | image_url: width: 600 | image_tag: alt: section.settings.image_front.alt, class: 'sustain-img-front' }}
+      {%- else -%}
+        <img class="sustain-img-front" src="https://placehold.co/500x660/2a2a26/fdfbf7?text=Certified+Manufacturing" alt="Certified manufacturing" loading="lazy"/>
+      {%- endif -%}
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="text-label" style="margin-bottom:1rem;">{{ section.settings.label | default: 'Sustainability' }}</div>
+      <h2 class="text-h2">{{ section.settings.heading | default: 'Built to last.<br><em>Made responsibly.</em>' }}</h2>
+      <p style="margin-top:1.75rem; font-size:0.95rem; line-height:1.85; color:rgba(26,26,26,0.65); max-width:42ch;">{{ section.settings.body | default: 'Longevity is our most sustainable feature. We partner with certified manufacturers committed to reducing water usage, eliminating harmful dyes, and ensuring fair wages across every step of our supply chain.' }}</p>
+      <div class="sustain-badges">
+        {%- if section.settings.badge_1 != blank -%}<span class="sustain-badge">{{ section.settings.badge_1 }}</span>{%- endif -%}
+        {%- if section.settings.badge_2 != blank -%}<span class="sustain-badge">{{ section.settings.badge_2 }}</span>{%- endif -%}
+        {%- if section.settings.badge_3 != blank -%}<span class="sustain-badge">{{ section.settings.badge_3 }}</span>{%- endif -%}
+        {%- if section.settings.badge_4 != blank -%}<span class="sustain-badge">{{ section.settings.badge_4 }}</span>{%- endif -%}
+      </div>
+      {%- if section.settings.button_label != blank -%}
+        <div style="margin-top:2.5rem;">
+          <a href="{{ section.settings.button_link | default: '#' }}" class="btn-secondary">{{ section.settings.button_label }} →</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sustainability",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Sustainability"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (HTML allowed)",
+      "default": "Built to last.<br><em>Made responsibly.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Longevity is our most sustainable feature. We partner with certified manufacturers committed to reducing water usage, eliminating harmful dyes, and ensuring fair wages across every step of our supply chain."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_front",
+      "label": "Front image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_back",
+      "label": "Back image"
+    },
+    {
+      "type": "text",
+      "id": "badge_1",
+      "label": "Badge 1",
+      "default": "bluesign®"
+    },
+    {
+      "type": "text",
+      "id": "badge_2",
+      "label": "Badge 2",
+      "default": "OEKO-TEX®"
+    },
+    {
+      "type": "text",
+      "id": "badge_3",
+      "label": "Badge 3",
+      "default": "Fair Wear"
+    },
+    {
+      "type": "text",
+      "id": "badge_4",
+      "label": "Badge 4",
+      "default": "Circular by 2026"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Our commitments"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sustainability"
+    }
+  ]
+}
+{% endschema %}

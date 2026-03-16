@@ -1,0 +1,24 @@
+<div class="collection-page">
+  <div class="collection-header reveal">
+    <div class="text-label" style="margin-bottom:0.75rem;">All Collections</div>
+    <h1 class="collection-title">Shop by Category</h1>
+  </div>
+  <div class="collection-grid">
+    {%- for collection in collections -%}
+      <a href="{{ collection.url }}" style="text-decoration:none; color:inherit;" class="collection-product-card">
+        <div class="collection-product-card-image">
+          {%- if collection.featured_image != blank -%}
+            {{ collection.featured_image | image_url: width: 600 | image_tag: alt: collection.featured_image.alt, loading: 'lazy' }}
+          {%- else -%}
+            <img src="https://placehold.co/400x533/F2EFE9/1a1a1a?text={{ collection.title | url_encode }}" alt="{{ collection.title }}" loading="lazy"/>
+          {%- endif -%}
+        </div>
+        <div class="collection-product-card-title">{{ collection.title }}</div>
+        <div class="collection-product-card-price">{{ collection.products_count }} products</div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{ "name": "Collections List", "settings": [] }
+{% endschema %}

@@ -1,0 +1,173 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for i in (1..6) -%}
+      {%- assign q_key = 'faq_' | append: i | append: '_question' -%}
+      {%- assign a_key = 'faq_' | append: i | append: '_answer' -%}
+      {%- assign q = section.settings[q_key] -%}
+      {%- assign a = section.settings[a_key] -%}
+      {%- if q != blank and a != blank -%}
+        {%- unless forloop.first -%},{%- endunless -%}
+        {
+          "@type": "Question",
+          "name": {{ q | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ a | json }}
+          }
+        }
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+<section id="faq">
+  <div class="faq-header reveal">
+    <div class="text-label" style="margin-bottom:0.75rem;">{{ section.settings.label | default: 'FAQ' }}</div>
+    <h2 class="text-h2">{{ section.settings.heading | default: 'Questions<br><em>answered.</em>' }}</h2>
+  </div>
+  <div class="accordion-list reveal reveal-delay-1">
+    {%- for i in (1..6) -%}
+      {%- assign q_key = 'faq_' | append: i | append: '_question' -%}
+      {%- assign a_key = 'faq_' | append: i | append: '_answer' -%}
+      {%- assign q = section.settings[q_key] -%}
+      {%- assign a = section.settings[a_key] -%}
+      {%- if q != blank and a != blank -%}
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            {{ q }}
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>{{ a }}</p>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.cta_text != blank -%}
+    <div class="faq-cta reveal">
+      <p>{{ section.settings.cta_text }}</p>
+      <a href="{{ section.settings.cta_link | default: '/pages/contact' }}" class="btn-secondary">{{ section.settings.cta_label | default: 'Contact us' }} →</a>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "FAQ"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (HTML allowed)",
+      "default": "Questions<br><em>answered.</em>"
+    },
+    {
+      "type": "text",
+      "id": "faq_1_question",
+      "label": "Question 1",
+      "default": "What makes Aura different from other performance brands?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_1_answer",
+      "label": "Answer 1",
+      "default": "Aura is built around a single philosophy: gear that works with your body, not against it. Our AXICORE™ compression technology is unique to Aura — adaptive support that responds to your movement patterns."
+    },
+    {
+      "type": "text",
+      "id": "faq_2_question",
+      "label": "Question 2",
+      "default": "How do I choose the right size?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_2_answer",
+      "label": "Answer 2",
+      "default": "We recommend consulting our size guide, which includes chest, waist, hip, and inseam measurements. Our apparel runs true to size."
+    },
+    {
+      "type": "text",
+      "id": "faq_3_question",
+      "label": "Question 3",
+      "default": "Can I return or exchange if it doesn't fit?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_3_answer",
+      "label": "Answer 3",
+      "default": "Absolutely. We offer 30-day free returns on all unworn, unmodified items in their original packaging."
+    },
+    {
+      "type": "text",
+      "id": "faq_4_question",
+      "label": "Question 4",
+      "default": "Why is Aura more expensive than standard athletic brands?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_4_answer",
+      "label": "Answer 4",
+      "default": "You're not paying for a logo — you're paying for the R&D behind AXICORE™, the certified sustainable manufacturing, and the materials that last years instead of months."
+    },
+    {
+      "type": "text",
+      "id": "faq_5_question",
+      "label": "Question 5",
+      "default": "Do you ship internationally?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_5_answer",
+      "label": "Answer 5",
+      "default": "Yes. We ship to over 40 countries worldwide. International shipping typically takes 5–10 business days."
+    },
+    {
+      "type": "text",
+      "id": "faq_6_question",
+      "label": "Question 6",
+      "default": "Are Aura products sustainably made?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_6_answer",
+      "label": "Answer 6",
+      "default": "We're committed to responsible manufacturing. All Aura products are made from bluesign® certified materials, in Fair Wear-certified facilities."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Didn't find your answer?"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ"
+    }
+  ]
+}
+{% endschema %}

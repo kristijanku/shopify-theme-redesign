@@ -1,0 +1,86 @@
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-overline reveal">
+      <span class="hero-overline-dot"></span>
+      <span class="text-label">{{ section.settings.overline | default: 'New Collection — SS25' }}</span>
+    </div>
+    <h1 class="text-display reveal reveal-delay-1">
+      {{ section.settings.heading | default: 'Engineered<br><em>for Motion.</em>' }}
+    </h1>
+    <p class="reveal reveal-delay-2" style="font-size:clamp(0.95rem,1.4vw,1.1rem); line-height:1.7; color:rgba(26,26,26,0.6); max-width:38ch;">
+      {{ section.settings.subheading | default: 'Premium athletic apparel crafted for those who refuse to settle.' }}
+    </p>
+    <div class="reveal reveal-delay-3">
+      <a href="{{ section.settings.button_link | default: routes.collections_url }}/all" class="btn-primary" id="heroCta">
+        {{ section.settings.button_label | default: 'Explore the Collection' }}
+        <span class="btn-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+    <div class="hero-scroll-indicator reveal reveal-delay-4">
+      <span class="hero-scroll-line"></span>
+      <span class="text-label">Scroll</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1200 | image_tag: alt: section.settings.image.alt, loading: 'eager', class: '' }}
+    {%- else -%}
+      <img
+        src="https://placehold.co/900x1100/2a2a26/fdfbf7?text=AURA+SS25"
+        alt="Aura Athletics Collection"
+        loading="eager"
+      />
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline text",
+      "default": "New Collection — SS25"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (HTML allowed)",
+      "default": "Engineered<br><em>for Motion.</em>"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium athletic apparel crafted for those who refuse to settle."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore the Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

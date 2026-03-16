@@ -1,0 +1,153 @@
+<div class="product-page">
+  <div class="product-layout">
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <div class="product-gallery-main" id="mainGallery">
+        {%- if product.featured_image != blank -%}
+          {{ product.featured_image | image_url: width: 900 | image_tag: alt: product.featured_image.alt, id: 'mainGalleryImg' }}
+        {%- else -%}
+          <img id="mainGalleryImg" src="https://placehold.co/600x800/F2EFE9/1a1a1a?text={{ product.title | url_encode }}" alt="{{ product.title }}"/>
+        {%- endif -%}
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="product-gallery-thumbs">
+          {%- for image in product.images limit: 6 -%}
+            <div class="product-gallery-thumb{% if forloop.first %} active{% endif %}">
+              {{ image | image_url: width: 200 | image_tag: alt: image.alt, loading: 'lazy' }}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Info -->
+    <div class="product-info">
+      {%- if product.vendor != blank -%}
+        <div class="text-label" style="margin-bottom:0.5rem;">{{ product.vendor }}</div>
+      {%- endif -%}
+      <h1 class="product-info-title">{{ product.title }}</h1>
+      <div class="product-info-price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="compare-price">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span id="productPrice">{{ product.price | money }}</span>
+      </div>
+
+      {% form 'product', product, id: 'productForm' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <span class="variant-label">{{ option.name }}</span>
+            <div class="variant-buttons" data-option-index="{{ forloop.index0 }}">
+              {%- for value in option.values -%}
+                {%- assign variant_available = false -%}
+                {%- for variant in product.variants -%}
+                  {%- if variant.option1 == value or variant.option2 == value or variant.option3 == value -%}
+                    {%- if variant.available -%}
+                      {%- assign variant_available = true -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                <button
+                  type="button"
+                  class="variant-btn{% unless variant_available %} unavailable{% endunless %}{% if option.selected_value == value %} active{% endif %}"
+                  data-option-index="{{ forloop.parentloop.index0 }}"
+                  data-option-value="{{ value | escape }}"
+                >{{ value }}</button>
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="product-form-atc">
+          {%- if product.selected_or_first_available_variant.available -%}
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+              Add to Cart
+              <span class="btn-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+              </span>
+            </button>
+          {%- else -%}
+            <button type="button" class="btn-primary" style="width:100%; justify-content:center; opacity:0.5; cursor:not-allowed;" disabled>
+              Sold Out
+              <span class="btn-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><line x1="8" y1="8" x2="16" y2="16"/>
+                </svg>
+              </span>
+            </button>
+          {%- endif -%}
+        </div>
+      {% endform %}
+
+      {%- if product.description != blank -%}
+        <div class="product-description">
+          {{ product.description }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Variant selector — update price and hidden ID
+  (function() {
+    var form = document.getElementById('productForm');
+    var priceEl = document.getElementById('productPrice');
+    var variants = {{ product.variants | json }};
+
+    function getSelectedOptions() {
+      var opts = {};
+      form.querySelectorAll('.variant-buttons').forEach(function(group) {
+        var active = group.querySelector('.variant-btn.active');
+        if (active) {
+          opts[active.dataset.optionIndex] = active.dataset.optionValue;
+        }
+      });
+      return opts;
+    }
+
+    form.querySelectorAll('.variant-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var group = this.closest('.variant-buttons');
+        group.querySelectorAll('.variant-btn').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+
+        var selectedOpts = getSelectedOptions();
+        var optionVals = Object.keys(selectedOpts).sort().map(function(k) { return selectedOpts[k]; });
+
+        var matchedVariant = null;
+        variants.forEach(function(v) {
+          var vOpts = [v.option1, v.option2, v.option3].filter(Boolean);
+          if (optionVals.every(function(val, i) { return vOpts[i] === val; })) {
+            matchedVariant = v;
+          }
+        });
+
+        if (matchedVariant) {
+          form.querySelector('input[name="id"]').value = matchedVariant.id;
+          if (priceEl) {
+            priceEl.textContent = formatMoney(matchedVariant.price);
+          }
+        }
+      });
+    });
+
+    function formatMoney(cents) {
+      return Shopify.formatMoney ? Shopify.formatMoney(cents, '{{ shop.money_format }}') :
+        '{{ cart.currency.symbol }}' + (cents / 100).toFixed(2);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}

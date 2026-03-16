@@ -1,0 +1,90 @@
+<section id="about">
+  <div class="about-watermark" aria-hidden="true">A</div>
+  <div class="about-content reveal">
+    <div class="text-label" style="margin-bottom:1rem;">{{ section.settings.label | default: 'About' }}</div>
+    <h2 class="text-h1">{{ section.settings.heading | default: 'Born from<br><em>discipline.</em>' }}</h2>
+    <div class="about-text-cols">
+      <p>{{ section.settings.body_col_1 | default: 'Aura Athletics was founded on a simple conviction: performance gear should work as hard as you do. Every piece is the result of obsessive attention — to fabric, to fit, to the way material moves with a body under pressure.' }}</p>
+      <p>{{ section.settings.body_col_2 | default: 'We design for athletes who train before the world is awake, who measure progress in millimetres, who understand that the right gear isn\'t a luxury — it\'s leverage.' }}</p>
+    </div>
+    {%- if section.settings.button_label != blank -%}
+      <div style="margin-top:2.5rem;">
+        <a href="{{ section.settings.button_link | default: '/pages/our-story' }}" class="btn-primary">
+          {{ section.settings.button_label }}
+          <span class="btn-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="about-image reveal reveal-delay-2">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 800 | image_tag: alt: section.settings.image.alt }}
+    {%- else -%}
+      <img src="https://placehold.co/600x800/2a2a26/fdfbf7?text=Aura+HQ+Athens" alt="Aura Athletics" loading="lazy"/>
+    {%- endif -%}
+    <div class="about-image-caption">{{ section.settings.image_caption | default: 'Aura HQ — Athens, GR' }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "About"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (HTML allowed)",
+      "default": "Born from<br><em>discipline.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "body_col_1",
+      "label": "Body column 1",
+      "default": "Aura Athletics was founded on a simple conviction: performance gear should work as hard as you do. Every piece is the result of obsessive attention — to fabric, to fit, to the way material moves with a body under pressure."
+    },
+    {
+      "type": "textarea",
+      "id": "body_col_2",
+      "label": "Body column 2",
+      "default": "We design for athletes who train before the world is awake, who measure progress in millimetres, who understand that the right gear isn't a luxury — it's leverage."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Our Story"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_caption",
+      "label": "Image caption",
+      "default": "Aura HQ — Athens, GR"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About"
+    }
+  ]
+}
+{% endschema %}

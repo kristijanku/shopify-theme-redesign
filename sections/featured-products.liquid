@@ -1,0 +1,125 @@
+{%- liquid
+  if section.settings.collection != blank
+    assign fp_collection = section.settings.collection
+  else
+    assign fp_collection = collections.all
+  endif
+  assign fp_limit = section.settings.products_to_show | default: 3
+-%}
+
+<section id="products">
+  <div class="products-header reveal">
+    <div>
+      <div class="text-label" style="margin-bottom:0.5rem;">{{ section.settings.section_label | default: 'Shop' }}</div>
+      <h2 class="text-h2">{{ section.settings.heading | default: 'The Collection' }}</h2>
+    </div>
+    <a href="{{ section.settings.view_all_link | default: routes.collections_url }}/all" class="btn-secondary">
+      {{ section.settings.view_all_label | default: 'View all' }} <span>→</span>
+    </a>
+  </div>
+
+  <div class="products-bento">
+    {%- assign products_array = fp_collection.products -%}
+    {%- assign hero_product = products_array[0] -%}
+    {%- if hero_product != blank -%}
+      <!-- Hero product -->
+      <div class="product-card-hero reveal">
+        <a href="{{ hero_product.url }}" class="product-card" style="min-height:580px; display:block; text-decoration:none;">
+          {%- if hero_product.tags contains 'new' or hero_product.tags contains 'New Arrival' -%}
+            <span class="product-badge">New Arrival</span>
+          {%- elsif hero_product.compare_at_price > hero_product.price -%}
+            <span class="product-badge">Sale</span>
+          {%- endif -%}
+          {%- if hero_product.featured_image != blank -%}
+            {{ hero_product.featured_image | image_url: width: 900 | image_tag: alt: hero_product.featured_image.alt, loading: 'lazy' }}
+          {%- else -%}
+            <img src="https://placehold.co/900x1200/1a1a1a/fdfbf7?text={{ hero_product.title | url_encode }}" alt="{{ hero_product.title }}" loading="lazy"/>
+          {%- endif -%}
+          <div class="product-card-meta">
+            <div class="product-card-title">{{ hero_product.title }}</div>
+            <div class="product-card-price">{{ hero_product.price | money }}</div>
+          </div>
+          <span class="product-cta-overlay">View Product</span>
+        </a>
+      </div>
+    {%- endif -%}
+
+    <!-- Smaller products -->
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      {%- for i in (1..2) -%}
+        {%- assign small_product = products_array[i] -%}
+        {%- if small_product != blank -%}
+          <div class="reveal reveal-delay-{{ i }}">
+            <a href="{{ small_product.url }}" class="product-card" style="min-height:280px; display:block; text-decoration:none;">
+              {%- if small_product.tags contains 'bestseller' or small_product.tags contains 'Bestseller' -%}
+                <span class="product-badge">Bestseller</span>
+              {%- elsif small_product.compare_at_price > small_product.price -%}
+                <span class="product-badge">Sale</span>
+              {%- endif -%}
+              {%- if small_product.featured_image != blank -%}
+                {{ small_product.featured_image | image_url: width: 600 | image_tag: alt: small_product.featured_image.alt, loading: 'lazy' }}
+              {%- else -%}
+                <img src="https://placehold.co/600x560/d4cdc4/1a1a1a?text={{ small_product.title | url_encode }}" alt="{{ small_product.title }}" loading="lazy"/>
+              {%- endif -%}
+              <div class="product-card-meta">
+                <div class="product-card-title">{{ small_product.title }}</div>
+                <div class="product-card-price">{{ small_product.price | money }}</div>
+              </div>
+              <span class="product-cta-overlay">View Product</span>
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Section label",
+      "default": "Shop"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
+}
+{% endschema %}

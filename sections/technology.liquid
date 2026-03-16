@@ -1,0 +1,125 @@
+<section id="axicore">
+  <div class="axicore-inner">
+    <div class="reveal">
+      <span class="axicore-tag">{{ section.settings.tag | default: 'Technology' }}</span>
+      <h2 class="text-h2" style="color:#FDFBF7; max-width:16ch;">{{ section.settings.heading | default: 'The science<br>behind every<br><em>fibre.</em>' }}</h2>
+    </div>
+    <div class="axicore-grid">
+      <div class="axicore-features reveal">
+        <div class="axicore-feature">
+          <div class="axicore-feature-num">{{ section.settings.feature_1_num | default: '01' }}</div>
+          <div class="axicore-feature-title">{{ section.settings.feature_1_title | default: 'Adaptive Compression Matrix' }}</div>
+          <div class="axicore-feature-body">{{ section.settings.feature_1_body | default: 'AXICORE™ responds to movement patterns in real-time, providing dynamic support that increases under load and releases during recovery phases.' }}</div>
+        </div>
+        <div class="axicore-feature">
+          <div class="axicore-feature-num">{{ section.settings.feature_2_num | default: '02' }}</div>
+          <div class="axicore-feature-title">{{ section.settings.feature_2_title | default: 'Full Range of Motion' }}</div>
+          <div class="axicore-feature-body">{{ section.settings.feature_2_body | default: 'Biomechanical mapping of 400+ movement patterns informed each panel placement. The result: enabling structure that disappears when you need it to.' }}</div>
+        </div>
+        <div class="axicore-feature">
+          <div class="axicore-feature-num">{{ section.settings.feature_3_num | default: '03' }}</div>
+          <div class="axicore-feature-title">{{ section.settings.feature_3_title | default: 'Thermoregulation' }}</div>
+          <div class="axicore-feature-body">{{ section.settings.feature_3_body | default: 'Four-way moisture management moves sweat away from the body 3× faster than standard compression fabrics, keeping core temperature stable across intensity levels.' }}</div>
+        </div>
+      </div>
+      <div class="axicore-visual reveal reveal-delay-2">
+        <div class="axicore-label-float" aria-hidden="true">{{ section.settings.watermark | default: 'AX' }}</div>
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 800 | image_tag: alt: section.settings.image.alt }}
+        {%- else -%}
+          <img src="https://placehold.co/600x800/111111/f0ece6?text=AXICORE™" alt="AXICORE technology" loading="lazy"/>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Technology",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Tag label",
+      "default": "Technology"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (HTML allowed)",
+      "default": "The science<br>behind every<br><em>fibre.</em>"
+    },
+    {
+      "type": "text",
+      "id": "watermark",
+      "label": "Watermark text",
+      "default": "AX"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "feature_1_num",
+      "label": "Feature 1 number",
+      "default": "01"
+    },
+    {
+      "type": "text",
+      "id": "feature_1_title",
+      "label": "Feature 1 title",
+      "default": "Adaptive Compression Matrix"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_1_body",
+      "label": "Feature 1 body",
+      "default": "AXICORE™ responds to movement patterns in real-time, providing dynamic support that increases under load and releases during recovery phases."
+    },
+    {
+      "type": "text",
+      "id": "feature_2_num",
+      "label": "Feature 2 number",
+      "default": "02"
+    },
+    {
+      "type": "text",
+      "id": "feature_2_title",
+      "label": "Feature 2 title",
+      "default": "Full Range of Motion"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_2_body",
+      "label": "Feature 2 body",
+      "default": "Biomechanical mapping of 400+ movement patterns informed each panel placement. The result: enabling structure that disappears when you need it to."
+    },
+    {
+      "type": "text",
+      "id": "feature_3_num",
+      "label": "Feature 3 number",
+      "default": "03"
+    },
+    {
+      "type": "text",
+      "id": "feature_3_title",
+      "label": "Feature 3 title",
+      "default": "Thermoregulation"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_3_body",
+      "label": "Feature 3 body",
+      "default": "Four-way moisture management moves sweat away from the body 3× faster than standard compression fabrics, keeping core temperature stable across intensity levels."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Technology"
+    }
+  ]
+}
+{% endschema %}

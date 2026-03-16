@@ -1,0 +1,65 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "overline": "New Collection — SS25",
+        "heading": "Engineered<br><em>for Motion.</em>",
+        "subheading": "Premium athletic apparel crafted for those who refuse to settle.",
+        "button_label": "Explore the Collection"
+      }
+    },
+    "stats": {
+      "type": "stats",
+      "settings": {}
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "settings": {
+        "section_label": "Shop",
+        "heading": "The Collection",
+        "view_all_label": "View all"
+      }
+    },
+    "about": {
+      "type": "about",
+      "settings": {}
+    },
+    "technology": {
+      "type": "technology",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {}
+    },
+    "athletes": {
+      "type": "athletes",
+      "settings": {}
+    },
+    "sustainability": {
+      "type": "sustainability",
+      "settings": {}
+    },
+    "community": {
+      "type": "community",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "stats",
+    "featured_products",
+    "about",
+    "technology",
+    "reviews",
+    "athletes",
+    "sustainability",
+    "community",
+    "faq"
+  ]
+}
