@@ -50,12 +50,120 @@
         "view_all_label": "View all",
         "view_all_link": ""
       }
+    },
+    "technology_XVmnmr": {
+      "type": "technology",
+      "name": "Technology",
+      "settings": {
+        "tag": "Technology",
+        "heading": "The science<br>behind every<br><em>fibre.</em>",
+        "watermark": "AX",
+        "feature_1_num": "01",
+        "feature_1_title": "Adaptive Compression Matrix",
+        "feature_1_body": "AXICORE™ responds to movement patterns in real-time, providing dynamic support that increases under load and releases during recovery phases.",
+        "feature_2_num": "02",
+        "feature_2_title": "Full Range of Motion",
+        "feature_2_body": "Biomechanical mapping of 400+ movement patterns informed each panel placement. The result: enabling structure that disappears when you need it to.",
+        "feature_3_num": "03",
+        "feature_3_title": "Thermoregulation",
+        "feature_3_body": "Four-way moisture management moves sweat away from the body 3× faster than standard compression fabrics, keeping core temperature stable across intensity levels."
+      }
+    },
+    "reviews_aRT3fm": {
+      "type": "reviews",
+      "name": "Reviews",
+      "settings": {
+        "label": "Reviews",
+        "heading": "Trusted by<br><em>2,400+ athletes.</em>",
+        "score": "4.8",
+        "score_count": "Based on 2,400+ verified reviews",
+        "pct_5": 82,
+        "pct_4": 12,
+        "pct_3": 4,
+        "pct_2": 1,
+        "pct_1": 1,
+        "press_1": "Runner's World",
+        "press_2": "Men's Health",
+        "press_3": "Wired",
+        "press_4": "GQ",
+        "review_1_initials": "AM",
+        "review_1_author": "Alex M.",
+        "review_1_location": "Athens, GR",
+        "review_1_body": "Hands down the best training gear I've ever owned. The compression is unlike anything I've tried — supportive where it needs to be, completely invisible when you're in flow.",
+        "review_2_initials": "JK",
+        "review_2_author": "Jordan K.",
+        "review_2_location": "London, UK",
+        "review_2_body": "The compression is exactly right — supportive but never restrictive. I do Olympic lifting and I've never found tights that allow this depth in the squat while still giving me that mid-section support.",
+        "review_3_initials": "SP",
+        "review_3_author": "Sam P.",
+        "review_3_location": "New York, US",
+        "review_3_body": "I've tried every brand. Nothing comes close to Aura for quality. After six months of hard use, the fabric hasn't pilled, the seams are perfect, and the fit is exactly what it was on day one."
+      }
+    },
+    "athletes_q9M4CT": {
+      "type": "athletes",
+      "name": "Athletes",
+      "settings": {
+        "label": "Athletes",
+        "heading": "Our athletes represent us with their<br><em>life, spirit, and dedication.</em>",
+        "athlete_1_name": "Maria Polypou",
+        "athlete_1_discipline": "Sprinter — 100m / 200m",
+        "athlete_2_name": "Nikos Papadakis",
+        "athlete_2_discipline": "Triathlete — Ironman Series",
+        "athlete_3_name": "Sofia Alexiou",
+        "athlete_3_discipline": "Ultra Trail — UTMB",
+        "athlete_4_name": "Dimitri Kounellis",
+        "athlete_4_discipline": "Olympic Weightlifter"
+      }
+    },
+    "sustainability_j4aXc9": {
+      "type": "sustainability",
+      "name": "Sustainability",
+      "settings": {
+        "label": "Sustainability",
+        "heading": "Built to last.<br><em>Made responsibly.</em>",
+        "body": "Longevity is our most sustainable feature. We partner with certified manufacturers committed to reducing water usage, eliminating harmful dyes, and ensuring fair wages across every step of our supply chain.",
+        "badge_1": "bluesign®",
+        "badge_2": "OEKO-TEX®",
+        "badge_3": "Fair Wear",
+        "badge_4": "Circular by 2026",
+        "button_label": "Our commitments",
+        "button_link": ""
+      }
+    },
+    "faq_bRWtYb": {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": {
+        "label": "FAQ",
+        "heading": "Questions<br><em>answered.</em>",
+        "faq_1_question": "What makes Aura different from other performance brands?",
+        "faq_1_answer": "Aura is built around a single philosophy: gear that works with your body, not against it. Our AXICORE™ compression technology is unique to Aura — adaptive support that responds to your movement patterns.",
+        "faq_2_question": "How do I choose the right size?",
+        "faq_2_answer": "We recommend consulting our size guide, which includes chest, waist, hip, and inseam measurements. Our apparel runs true to size.",
+        "faq_3_question": "Can I return or exchange if it doesn't fit?",
+        "faq_3_answer": "Absolutely. We offer 30-day free returns on all unworn, unmodified items in their original packaging.",
+        "faq_4_question": "Why is Aura more expensive than standard athletic brands?",
+        "faq_4_answer": "You're not paying for a logo — you're paying for the R&D behind AXICORE™, the certified sustainable manufacturing, and the materials that last years instead of months.",
+        "faq_5_question": "Do you ship internationally?",
+        "faq_5_answer": "Yes. We ship to over 40 countries worldwide. International shipping typically takes 5–10 business days.",
+        "faq_6_question": "Are Aura products sustainably made?",
+        "faq_6_answer": "We're committed to responsible manufacturing. All Aura products are made from bluesign® certified materials, in Fair Wear-certified facilities.",
+        "cta_text": "Didn't find your answer?",
+        "cta_label": "Contact us",
+        "cta_link": ""
+      }
     }
   },
   "order": [
     "main",
     "hero_HJpaQz",
     "stats_kBJUKd",
-    "featured_products_PAQxm3"
+    "featured_products_PAQxm3",
+    "technology_XVmnmr",
+    "reviews_aRT3fm",
+    "athletes_q9M4CT",
+    "sustainability_j4aXc9",
+    "faq_bRWtYb"
   ]
 }
