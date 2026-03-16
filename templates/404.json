@@ -51,6 +51,19 @@
         "view_all_link": ""
       }
     },
+    "about_yNAGYf": {
+      "type": "about",
+      "name": "AURA — About",
+      "settings": {
+        "label": "About",
+        "heading": "Born from<br><em>discipline.</em>",
+        "body_col_1": "Aura Athletics was founded on a simple conviction: performance gear should work as hard as you do.",
+        "body_col_2": "We design for athletes who train before the world is awake, who understand that the right gear is leverage.",
+        "button_label": "Our Story",
+        "button_link": "",
+        "image_caption": "Aura HQ, Athens GR"
+      }
+    },
     "technology_XVmnmr": {
       "type": "technology",
       "name": "Technology",
@@ -153,6 +166,16 @@
         "cta_label": "Contact us",
         "cta_link": ""
       }
+    },
+    "community_Q7zHcd": {
+      "type": "community",
+      "name": "AURA — Community",
+      "settings": {
+        "label": "Community",
+        "heading": "The movement,<br><em>in motion.</em>",
+        "instagram_label": "@auraathletics",
+        "instagram_url": ""
+      }
     }
   },
   "order": [
@@ -160,10 +183,12 @@
     "hero_HJpaQz",
     "stats_kBJUKd",
     "featured_products_PAQxm3",
+    "about_yNAGYf",
     "technology_XVmnmr",
     "reviews_aRT3fm",
     "athletes_q9M4CT",
     "sustainability_j4aXc9",
+    "community_Q7zHcd",
     "faq_bRWtYb"
   ]
 }
