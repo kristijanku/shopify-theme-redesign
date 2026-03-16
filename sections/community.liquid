@@ -9,15 +9,15 @@
     {%- endif -%}
   </div>
   <div class="community-masonry reveal reveal-delay-1">
+    {%- assign placeholders = '400x520,2a2a26,fdfbf7,Training|400x380,e8e4dc,1a1a1a,Race Day|400x460,d4cdc4,1a1a1a,Recovery|400x340,1a1a1a,fdfbf7,Athens|400x500,f2efe9,1a1a1a,Athlete Life|400x360,2a2a20,fdfbf7,Discipline' | split: '|' -%}
     {%- for i in (1..6) -%}
       {%- assign img_key = 'image_' | append: i -%}
       {%- assign img = section.settings[img_key] -%}
+      {%- assign ph = placeholders[forloop.index0] | split: ',' -%}
       <div class="community-item">
         {%- if img != blank -%}
           {{ img | image_url: width: 600 | image_tag: alt: img.alt, loading: 'lazy' }}
         {%- else -%}
-          {%- assign placeholders = '400x520,2a2a26,fdfbf7,Training|400x380,e8e4dc,1a1a1a,Race Day|400x460,d4cdc4,1a1a1a,Recovery|400x340,1a1a1a,fdfbf7,Athens|400x500,f2efe9,1a1a1a,Athlete Life|400x360,2a2a20,fdfbf7,Discipline' | split: '|' -%}
-          {%- assign ph = placeholders[i | minus: 1] | split: ',' -%}
           <img src="https://placehold.co/{{ ph[0] }}/{{ ph[1] }}/{{ ph[2] }}?text={{ ph[3] | url_encode }}" alt="{{ ph[3] }}" loading="lazy"/>
         {%- endif -%}
       </div>
