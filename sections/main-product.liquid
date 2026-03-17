@@ -1,15 +1,24 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<!-- ═══════════════════════════════════════════════════════════
-     PDP WRAP
-═══════════════════════════════════════════════════════════ -->
 <div class="pdp-wrap" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}">
 
-  <!-- ── TOP: Gallery + Info ─────────────────────────────── -->
+  <!-- ── TOP: Gallery (58%) + Info (42%) ──────────────── -->
   <div class="pdp-top">
 
-    <!-- ── DESKTOP GALLERY ────────────────────────────────── -->
+    <!-- ── DESKTOP GALLERY (sticky, full height) ─────── -->
     <div class="pdp-gallery-col">
+      <div class="pdp-main-image" id="pdp-main-image">
+        {%- for image in product.images -%}
+          <div class="pdp-slide{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}">
+            {%- if forloop.first -%}
+              {{ image | image_url: width: 1400 | image_tag: alt: image.alt, loading: 'eager', class: 'pdp-img' }}
+            {%- else -%}
+              {{ image | image_url: width: 1400 | image_tag: alt: image.alt, loading: 'lazy', class: 'pdp-img' }}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <!-- Floating glassmorphic thumb strip -->
       <div class="pdp-thumbstrip" id="pdp-thumbstrip">
         {%- for image in product.images -%}
           <button
@@ -21,20 +30,9 @@
           </button>
         {%- endfor -%}
       </div>
-      <div class="pdp-main-image" id="pdp-main-image">
-        {%- for image in product.images -%}
-          <div class="pdp-slide{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}">
-            {%- if forloop.first -%}
-              {{ image | image_url: width: 1200 | image_tag: alt: image.alt, loading: 'eager', class: 'pdp-img' }}
-            {%- else -%}
-              {{ image | image_url: width: 1200 | image_tag: alt: image.alt, loading: 'lazy', class: 'pdp-img' }}
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      </div>
     </div>
 
-    <!-- ── MOBILE GALLERY ─────────────────────────────────── -->
+    <!-- ── MOBILE CAROUSEL ────────────────────────────── -->
     <div class="pdp-mobile-gallery">
       <div class="pdp-carousel-track" id="pdp-carousel-track">
         {%- for image in product.images -%}
@@ -49,21 +47,28 @@
       </div>
       <div class="pdp-carousel-dots" id="pdp-carousel-dots">
         {%- for image in product.images -%}
-          <button class="pdp-dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to image {{ forloop.index }}"></button>
+          <button class="pdp-dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
         {%- endfor -%}
       </div>
     </div>
 
-    <!-- ── BUY BOX ─────────────────────────────────────────── -->
+    <!-- ── BUY BOX ─────────────────────────────────────── -->
     <div class="pdp-info-col">
 
-      {%- if section.settings.show_trending -%}
-        <div class="pdp-trending">🔥 {{ section.settings.trending_label | default: 'Trending this week' }}</div>
-      {%- endif -%}
+      <!-- Collection eyebrow -->
+      <div class="pdp-eyebrow pdp-reveal" style="--delay:0s">
+        {%- if product.collections.first -%}
+          AURA /&nbsp;{{ product.collections.first.title }}
+        {%- else -%}
+          AURA Athletics
+        {%- endif -%}
+      </div>
 
-      <h1 class="pdp-title">{{ product.title }}</h1>
+      <!-- Title -->
+      <h1 class="pdp-title pdp-reveal" style="--delay:0.08s">{{ product.title }}</h1>
 
-      <div class="pdp-price-row">
+      <!-- Price + rating -->
+      <div class="pdp-price-row pdp-reveal" style="--delay:0.14s">
         <div class="pdp-price" id="pdp-price">
           {%- if current_variant.compare_at_price > current_variant.price -%}
             <span class="pdp-price-original">{{ current_variant.compare_at_price | money }}</span>
@@ -79,10 +84,11 @@
         </div>
       </div>
 
-      <div class="pdp-urgency">
+      <!-- Urgency strip -->
+      <div class="pdp-urgency pdp-reveal" style="--delay:0.2s">
         <div class="pdp-viewers">
           <span class="pdp-viewers-dot"></span>
-          <span id="pdp-viewers-count">--</span> people viewing this right now
+          <span id="pdp-viewers-count">--</span>&nbsp;people viewing this right now
         </div>
         {%- if section.settings.show_stock_warning -%}
           <div class="pdp-stock-warn" id="pdp-stock-warn">
@@ -97,16 +103,18 @@
         {%- endif -%}
       </div>
 
+      <!-- Product form -->
       {%- form 'product', product, id: 'pdp-form' -%}
         <input type="hidden" name="id" id="pdp-variant-id" value="{{ current_variant.id }}">
 
+        <!-- Variant options -->
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
-            <div class="pdp-option-group">
+            <div class="pdp-option-group pdp-reveal" style="--delay:{{ forloop.index | times: 0.06 | plus: 0.22 }}s">
               <div class="pdp-option-label">
                 {{ option.name }}
                 {%- if option.name == 'Size' -%}
-                  <a href="/pages/size-guide" class="pdp-size-guide" target="_blank">Size Guide</a>
+                  <a href="/pages/size-guide" class="pdp-size-guide" target="_blank">Size guide</a>
                 {%- endif -%}
               </div>
               <div class="pdp-variant-pills" data-option-index="{{ forloop.index0 }}">
@@ -116,9 +124,7 @@
                   {%- for variant in product.variants -%}
                     {%- if variant.available -%}
                       {%- assign opt_val = variant.options[opt_idx] -%}
-                      {%- if opt_val == value -%}
-                        {%- assign is_available = true -%}
-                      {%- endif -%}
+                      {%- if opt_val == value -%}{%- assign is_available = true -%}{%- endif -%}
                     {%- endif -%}
                   {%- endfor -%}
                   <button
@@ -134,7 +140,8 @@
           {%- endfor -%}
         {%- endunless -%}
 
-        <div class="pdp-buy-row">
+        <!-- Qty + ATC -->
+        <div class="pdp-buy-row pdp-reveal" style="--delay:0.38s">
           <div class="pdp-qty">
             <button type="button" class="pdp-qty-btn" id="pdp-qty-minus" aria-label="Decrease quantity">−</button>
             <input type="number" name="quantity" id="pdp-qty-input" value="1" min="1" max="99" class="pdp-qty-input" aria-label="Quantity">
@@ -148,11 +155,13 @@
             {%- unless current_variant.available %} disabled aria-disabled="true"{%- endunless -%}
           >
             <span id="pdp-atc-label">
-              {%- if current_variant.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+              {%- if current_variant.available -%}Add to Bag{%- else -%}Sold Out{%- endif -%}
             </span>
+            <span class="pdp-atc-arrow">→</span>
           </button>
         </div>
 
+        <!-- Dynamic checkout -->
         {%- if section.settings.show_dynamic_checkout -%}
           <div class="pdp-dynamic-checkout">
             {{ form | payment_button }}
@@ -160,21 +169,22 @@
         {%- endif -%}
       {%- endform -%}
 
-      <div class="pdp-trust">
+      <!-- Trust strip -->
+      <div class="pdp-trust pdp-reveal" style="--delay:0.44s">
         <div class="pdp-trust-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <span>Secure checkout</span>
         </div>
         <div class="pdp-trust-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="22" height="16" rx="2"/><path d="M1 9h22"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3"/></svg>
           <span>Free returns</span>
         </div>
         <div class="pdp-trust-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 17l5-5-5-5M6 17l5-5-5-5" opacity=".5"/><path d="M18 12H6"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
           <span>Ships in 24h</span>
         </div>
         <div class="pdp-trust-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
           <span>2-year warranty</span>
         </div>
       </div>
@@ -186,9 +196,9 @@
   <div class="pdp-bento">
     <div class="pdp-bento-hero">
       {%- if section.settings.bento_image_1 != blank -%}
-        {{ section.settings.bento_image_1 | image_url: width: 1200 | image_tag: alt: section.settings.bento_image_1.alt, loading: 'lazy' }}
+        {{ section.settings.bento_image_1 | image_url: width: 1400 | image_tag: alt: section.settings.bento_image_1.alt, loading: 'lazy' }}
       {%- else -%}
-        <img src="https://placehold.co/800x720/1a1a1a/fdfbf7?text=Lifestyle" alt="Lifestyle" loading="lazy">
+        <img src="https://placehold.co/900x820/1a1a1a/fdfbf7?text=Lifestyle" alt="Lifestyle" loading="lazy">
       {%- endif -%}
       {%- if section.settings.bento_quote != blank -%}
         <div class="pdp-bento-quote">{{ section.settings.bento_quote }}</div>
@@ -196,25 +206,19 @@
     </div>
     <div class="pdp-bento-small">
       {%- if section.settings.bento_image_2 != blank -%}
-        {{ section.settings.bento_image_2 | image_url: width: 600 | image_tag: alt: section.settings.bento_image_2.alt, loading: 'lazy' }}
+        {{ section.settings.bento_image_2 | image_url: width: 800 | image_tag: alt: section.settings.bento_image_2.alt, loading: 'lazy' }}
       {%- else -%}
-        <img src="https://placehold.co/400x480/2a2a26/fdfbf7?text=Detail" alt="Detail" loading="lazy">
+        <img src="https://placehold.co/600x560/2a2a26/fdfbf7?text=Detail" alt="Detail" loading="lazy">
       {%- endif -%}
     </div>
     <div class="pdp-bento-small">
       {%- if section.settings.bento_image_3 != blank -%}
-        {{ section.settings.bento_image_3 | image_url: width: 600 | image_tag: alt: section.settings.bento_image_3.alt, loading: 'lazy' }}
+        {{ section.settings.bento_image_3 | image_url: width: 800 | image_tag: alt: section.settings.bento_image_3.alt, loading: 'lazy' }}
       {%- else -%}
-        <img src="https://placehold.co/400x240/d4cdc4/1a1a1a?text=Texture" alt="Texture" loading="lazy">
+        <img src="https://placehold.co/600x260/d4cdc4/1a1a1a?text=Texture" alt="Texture" loading="lazy">
       {%- endif -%}
     </div>
-    <div class="pdp-bento-banner">
-      {%- if section.settings.bento_image_4 != blank -%}
-        {{ section.settings.bento_image_4 | image_url: width: 1600 | image_tag: alt: section.settings.bento_image_4.alt, loading: 'lazy' }}
-      {%- else -%}
-        <img src="https://placehold.co/1200x240/2a2a20/fdfbf7?text=In+Motion" alt="In Motion" loading="lazy">
-      {%- endif -%}
-    </div>
+    <div class="pdp-bento-banner"></div>
   </div>
 
   <!-- ── PRODUCT DETAILS ACCORDION ─────────────────────── -->
@@ -223,7 +227,7 @@
     <div class="pdp-accordion-item open">
       <button class="pdp-accordion-trigger" type="button" aria-expanded="true">
         <span>{{ section.settings.accordion_label_description | default: 'Description' }}</span>
-        <svg class="pdp-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
       </button>
       <div class="pdp-accordion-body">
         <div class="pdp-accordion-inner">{{ product.description }}</div>
@@ -234,7 +238,7 @@
       <div class="pdp-accordion-item">
         <button class="pdp-accordion-trigger" type="button" aria-expanded="false">
           <span>{{ section.settings.accordion_label_sizing | default: 'Sizing & Fit' }}</span>
-          <svg class="pdp-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="pdp-accordion-body">
           <div class="pdp-accordion-inner">{{ section.settings.accordion_body_sizing }}</div>
@@ -246,7 +250,7 @@
       <div class="pdp-accordion-item">
         <button class="pdp-accordion-trigger" type="button" aria-expanded="false">
           <span>{{ section.settings.accordion_label_materials | default: 'Materials & Care' }}</span>
-          <svg class="pdp-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="pdp-accordion-body">
           <div class="pdp-accordion-inner">{{ section.settings.accordion_body_materials }}</div>
@@ -258,7 +262,7 @@
       <div class="pdp-accordion-item">
         <button class="pdp-accordion-trigger" type="button" aria-expanded="false">
           <span>{{ section.settings.accordion_label_shipping | default: 'Shipping & Returns' }}</span>
-          <svg class="pdp-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="pdp-accordion-body">
           <div class="pdp-accordion-inner">{{ section.settings.accordion_body_shipping }}</div>
@@ -297,12 +301,8 @@
               {%- endunless -%}
             {%- endfor -%}
           </div>
-          <button class="pdp-sugg-arrow pdp-sugg-prev" id="pdp-sugg-prev" aria-label="Previous">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          </button>
-          <button class="pdp-sugg-arrow pdp-sugg-next" id="pdp-sugg-next" aria-label="Next">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
+          <button class="pdp-sugg-arrow pdp-sugg-prev" id="pdp-sugg-prev" aria-label="Previous">←</button>
+          <button class="pdp-sugg-arrow pdp-sugg-next" id="pdp-sugg-next" aria-label="Next">→</button>
         </div>
       </div>
     {%- endif -%}
@@ -317,7 +317,10 @@
       <div class="pdp-sticky-title">{{ product.title }}</div>
       <div class="pdp-sticky-price" id="pdp-sticky-price">{{ current_variant.price | money }}</div>
     </div>
-    <button class="pdp-atc pdp-sticky-btn" id="pdp-sticky-btn" type="button">Add to Cart</button>
+    <button class="pdp-atc pdp-sticky-btn" id="pdp-sticky-btn" type="button">
+      <span>Add to Bag</span>
+      <span class="pdp-atc-arrow">→</span>
+    </button>
   </div>
 </div>
 
@@ -334,7 +337,7 @@
           price: {{ variant.price }},
           compareAtPrice: {{ variant.compare_at_price | default: 0 }},
           options: {{ variant.options | json }},
-          featuredImageSrc: {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 1200 | json }}{% else %}null{% endif %}
+          featuredImageSrc: {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 1400 | json }}{% else %}null{% endif %}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ],
@@ -350,19 +353,23 @@
   "settings": [
     {
       "type": "header",
-      "content": "Urgency & Social Proof"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_trending",
-      "label": "Show trending badge",
-      "default": true
+      "content": "Social Proof"
     },
     {
       "type": "text",
-      "id": "trending_label",
-      "label": "Trending badge text",
-      "default": "Trending this week"
+      "id": "review_score",
+      "label": "Review score",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "214"
+    },
+    {
+      "type": "header",
+      "content": "Urgency"
     },
     {
       "type": "checkbox",
@@ -383,18 +390,6 @@
       "default": true
     },
     {
-      "type": "text",
-      "id": "review_score",
-      "label": "Review score",
-      "default": "4.8"
-    },
-    {
-      "type": "text",
-      "id": "review_count",
-      "label": "Review count",
-      "default": "214"
-    },
-    {
       "type": "header",
       "content": "Checkout"
     },
@@ -411,32 +406,27 @@
     {
       "type": "image_picker",
       "id": "bento_image_1",
-      "label": "Bento hero image (large left)"
+      "label": "Bento hero image (left, tall)"
     },
     {
       "type": "image_picker",
       "id": "bento_image_2",
-      "label": "Bento image 2 (top right)"
+      "label": "Bento image 2 (right top)"
     },
     {
       "type": "image_picker",
       "id": "bento_image_3",
-      "label": "Bento image 3 (bottom right)"
-    },
-    {
-      "type": "image_picker",
-      "id": "bento_image_4",
-      "label": "Bento banner (full width)"
+      "label": "Bento image 3 (right bottom)"
     },
     {
       "type": "text",
       "id": "bento_quote",
-      "label": "Bento hero quote overlay",
+      "label": "Hero quote overlay",
       "default": "Built for the work."
     },
     {
       "type": "header",
-      "content": "Accordion Labels & Content"
+      "content": "Accordion"
     },
     {
       "type": "text",
@@ -489,7 +479,7 @@
     {
       "type": "text",
       "id": "suggested_title",
-      "label": "Suggested section title",
+      "label": "Section title",
       "default": "You Might Also Like"
     }
   ],
