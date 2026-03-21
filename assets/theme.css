@@ -2246,3 +2246,414 @@ body {
   .pdp-sugg-card { flex: 0 0 calc(75% - 0.75rem); }
   .pdp-review-cards { grid-template-columns: 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   PDP CONTENT SECTIONS — Conversion copy pages
+   (subhead, inline trust, pain, mechanism, benefits, quotes,
+    guarantee, final CTA, FAQ)
+═══════════════════════════════════════════════════════════════ */
+
+/* ─── SHARED SECTION PRIMITIVES ────────────────────────────── */
+.pdp-section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.4);
+  margin-bottom: 1.25rem;
+}
+
+/* ─── BUY BOX ADDITIONS ─────────────────────────────────────── */
+
+/* Subheadline */
+.pdp-subhead {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: rgba(26,26,26,0.62);
+  margin: 0 0 1.25rem;
+  max-width: 42ch;
+}
+
+/* Inline trust bar */
+.pdp-inline-trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.55rem;
+  font-size: 0.68rem;
+  color: rgba(26,26,26,0.5);
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(26,26,26,0.08);
+}
+.pdp-inline-trust-stars {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: #1a1a1a;
+}
+.pdp-inline-trust-score {
+  color: #1a1a1a;
+  font-weight: 500;
+}
+.pdp-inline-trust-sep {
+  color: rgba(26,26,26,0.2);
+}
+
+/* ATC micro-copy */
+.pdp-atc-microcopy {
+  font-size: 0.7rem;
+  color: rgba(26,26,26,0.45);
+  text-align: center;
+  margin: 0.5rem 0 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+/* Final CTA button scroll-to-form */
+.pdp-finalcta-btn {
+  width: auto;
+  padding: 0 2.5rem;
+  min-width: 220px;
+}
+
+/* ─── PAIN AMPLIFICATION ────────────────────────────────────── */
+.pdp-pain-section {
+  padding: 6rem 5vw;
+  border-top: 1px solid rgba(26,26,26,0.08);
+  background: #1a1a1a;
+  color: #fdfbf7;
+}
+.pdp-pain-section .pdp-section-label {
+  color: rgba(253,251,247,0.35);
+}
+.pdp-pain-inner {
+  max-width: 740px;
+  margin: 0 auto;
+}
+.pdp-pain-headline {
+  font-family: 'PPEditorialNew', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.5rem;
+  color: #fdfbf7;
+}
+.pdp-pain-body p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(253,251,247,0.7);
+  margin: 0 0 1.25rem;
+  max-width: 65ch;
+}
+.pdp-pain-body p:last-child { margin-bottom: 0; }
+
+/* ─── MECHANISM REVEAL ──────────────────────────────────────── */
+.pdp-mechanism-section {
+  padding: 6rem 5vw;
+  border-top: 1px solid rgba(26,26,26,0.08);
+  background: #fdfbf7;
+}
+.pdp-mechanism-inner {
+  max-width: 740px;
+  margin: 0 auto;
+}
+.pdp-mechanism-headline {
+  font-family: 'PPEditorialNew', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.5rem;
+  color: #1a1a1a;
+}
+.pdp-mechanism-body p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(26,26,26,0.65);
+  margin: 0 0 1.25rem;
+  max-width: 65ch;
+}
+.pdp-mechanism-body p:last-child { margin-bottom: 0; }
+
+/* ─── BENEFIT STACK ─────────────────────────────────────────── */
+.pdp-benefits-section {
+  padding: 6rem 5vw;
+  border-top: 1px solid rgba(26,26,26,0.08);
+  background: #f5f1ea;
+}
+.pdp-benefits-inner { max-width: 1100px; margin: 0 auto; }
+.pdp-benefits-headline {
+  font-family: 'PPEditorialNew', serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.8rem);
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 3.5rem;
+  color: #1a1a1a;
+  max-width: 20ch;
+}
+.pdp-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid rgba(26,26,26,0.1);
+  border-left: 1px solid rgba(26,26,26,0.1);
+}
+.pdp-benefit-card {
+  display: flex;
+  gap: 1.25rem;
+  padding: 2rem;
+  border-right: 1px solid rgba(26,26,26,0.1);
+  border-bottom: 1px solid rgba(26,26,26,0.1);
+  background: #f5f1ea;
+  transition: background 0.25s ease;
+}
+.pdp-benefit-card:hover { background: #eee9e0; }
+.pdp-benefit-num {
+  font-family: 'PPEditorialNew', serif;
+  font-size: 1.5rem;
+  font-weight: 200;
+  color: rgba(26,26,26,0.2);
+  line-height: 1;
+  flex-shrink: 0;
+  padding-top: 0.15rem;
+}
+.pdp-benefit-feature {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem;
+  color: #1a1a1a;
+}
+.pdp-benefit-desc {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: rgba(26,26,26,0.6);
+  margin-bottom: 0.75rem;
+}
+.pdp-benefit-feeling {
+  font-family: 'PPEditorialNew', serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  font-weight: 200;
+  color: rgba(26,26,26,0.55);
+  line-height: 1.5;
+}
+
+/* ─── FEATURED QUOTES ───────────────────────────────────────── */
+.pdp-quotes-section {
+  padding: 6rem 5vw;
+  border-top: 1px solid rgba(26,26,26,0.08);
+  background: #1a1a1a;
+  color: #fdfbf7;
+}
+.pdp-quotes-section .pdp-section-label { color: rgba(253,251,247,0.35); }
+.pdp-quotes-inner { max-width: 1100px; margin: 0 auto; }
+.pdp-quotes-headline {
+  font-family: 'PPEditorialNew', serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.8rem);
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+  color: #fdfbf7;
+}
+.pdp-quotes-score {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 3rem;
+  font-size: 0.75rem;
+  color: rgba(253,251,247,0.5);
+}
+.pdp-quotes-stars { font-size: 0.7rem; letter-spacing: 0.1em; color: #fdfbf7; }
+.pdp-quotes-rating { color: rgba(253,251,247,0.6); }
+.pdp-quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(253,251,247,0.08);
+  border: 1px solid rgba(253,251,247,0.08);
+}
+.pdp-quote-card {
+  background: #1a1a1a;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: background 0.25s ease;
+}
+.pdp-quote-card:hover { background: #222220; }
+.pdp-quote-stars {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: #fdfbf7;
+}
+.pdp-quote-text {
+  font-family: 'PPEditorialNew', serif;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1.55;
+  color: rgba(253,251,247,0.88);
+  margin: 0;
+  flex: 1;
+}
+.pdp-quote-author { margin-top: auto; }
+.pdp-quote-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fdfbf7;
+  margin-bottom: 0.2rem;
+}
+.pdp-quote-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(253,251,247,0.35);
+}
+
+/* ─── GUARANTEE ─────────────────────────────────────────────── */
+.pdp-guarantee-section {
+  padding: 7rem 5vw;
+  border-top: 1px solid rgba(26,26,26,0.08);
+  background: #fdfbf7;
+  text-align: center;
+}
+.pdp-guarantee-inner { max-width: 620px; margin: 0 auto; }
+.pdp-guarantee-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.4);
+  border: 1px solid rgba(26,26,26,0.12);
+  padding: 0.45rem 1.25rem;
+  margin-bottom: 2rem;
+}
+.pdp-guarantee-headline {
+  font-family: 'PPEditorialNew', serif;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 200;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 2rem;
+  color: #1a1a1a;
+}
+.pdp-guarantee-body {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgba(26,26,26,0.62);
+  margin: 0 0 1rem;
+  max-width: 52ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pdp-guarantee-emphasis {
+  font-family: 'PPEditorialNew', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 200;
+  color: #1a1a1a;
+  margin: 2rem 0 0;
+}
+
+/* ─── FINAL CTA ─────────────────────────────────────────────── */
+.pdp-finalcta-section {
+  padding: 7rem 5vw;
+  border-top: 1px solid rgba(26,26,26,0.08);
+  background: #1a1a1a;
+  text-align: center;
+}
+.pdp-finalcta-inner { max-width: 580px; margin: 0 auto; }
+.pdp-finalcta-headline {
+  font-family: 'PPEditorialNew', serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.8rem);
+  font-weight: 200;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fdfbf7;
+  margin: 0 0 1.25rem;
+}
+.pdp-finalcta-body {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: rgba(253,251,247,0.55);
+  margin: 0 0 2.5rem;
+  max-width: 48ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pdp-finalcta-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+.pdp-finalcta-btn {
+  height: 56px;
+  font-size: 0.82rem;
+}
+.pdp-finalcta-microcopy {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: rgba(253,251,247,0.3);
+  margin: 0;
+}
+
+/* ─── FAQ ───────────────────────────────────────────────────── */
+.pdp-faq-section {
+  padding: 6rem 5vw;
+  border-top: 1px solid rgba(26,26,26,0.08);
+  background: #fdfbf7;
+}
+.pdp-faq-inner { max-width: 740px; margin: 0 auto; }
+.pdp-faq-headline {
+  font-family: 'PPEditorialNew', serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 200;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.5rem;
+  color: #1a1a1a;
+}
+.pdp-faq-list { border-top: 1px solid rgba(26,26,26,0.08); }
+/* FAQ uses the same .pdp-accordion-item styles */
+.pdp-faq-list .pdp-accordion-inner a {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
+
+/* ─── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .pdp-pain-section,
+  .pdp-mechanism-section,
+  .pdp-benefits-section,
+  .pdp-quotes-section,
+  .pdp-guarantee-section,
+  .pdp-finalcta-section,
+  .pdp-faq-section { padding: 4rem 1.25rem; }
+
+  .pdp-benefits-grid { grid-template-columns: 1fr; }
+  .pdp-benefit-card { padding: 1.5rem; }
+
+  .pdp-quotes-grid { grid-template-columns: 1fr; }
+  .pdp-quote-card { padding: 1.75rem; }
+
+  .pdp-inline-trust { gap: 0.25rem 0.4rem; }
+  .pdp-inline-trust-sep { display: none; }
+  .pdp-inline-trust > span { display: block; width: 100%; }
+  .pdp-inline-trust-score, .pdp-inline-trust-stars { display: inline; width: auto; }
+
+  .pdp-finalcta-btn { min-width: 180px; padding: 0 1.75rem; }
+}
+
+@media (max-width: 480px) {
+  .pdp-benefits-grid { grid-template-columns: 1fr; }
+  .pdp-quotes-grid { grid-template-columns: 1fr; }
+  .pdp-guarantee-section { text-align: left; }
+  .pdp-guarantee-body { margin-left: 0; margin-right: 0; }
+  .pdp-finalcta-section { text-align: left; }
+  .pdp-finalcta-btn-wrap { align-items: flex-start; }
+  .pdp-finalcta-body { margin-left: 0; margin-right: 0; }
+}

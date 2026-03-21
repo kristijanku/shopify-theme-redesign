@@ -2,10 +2,12 @@
 
 <div class="pdp-wrap" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}">
 
-  <!-- ── TOP: Gallery (58%) + Info (42%) ──────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════
+       ABOVE THE FOLD: Gallery (58%) + Buy Box (42%)
+  ═══════════════════════════════════════════════════════════ -->
   <div class="pdp-top">
 
-    <!-- ── DESKTOP GALLERY (sticky, full height) ─────── -->
+    <!-- ── DESKTOP GALLERY ────────────────────────────────────── -->
     <div class="pdp-gallery-col">
       <div class="pdp-main-image" id="pdp-main-image">
         {%- for image in product.images -%}
@@ -18,7 +20,6 @@
           </div>
         {%- endfor -%}
       </div>
-      <!-- Floating glassmorphic thumb strip -->
       <div class="pdp-thumbstrip" id="pdp-thumbstrip">
         {%- for image in product.images -%}
           <button
@@ -32,7 +33,7 @@
       </div>
     </div>
 
-    <!-- ── MOBILE CAROUSEL ────────────────────────────── -->
+    <!-- ── MOBILE CAROUSEL ────────────────────────────────────── -->
     <div class="pdp-mobile-gallery">
       <div class="pdp-carousel-track" id="pdp-carousel-track">
         {%- for image in product.images -%}
@@ -52,23 +53,36 @@
       </div>
     </div>
 
-    <!-- ── BUY BOX ─────────────────────────────────────── -->
+    <!-- ── BUY BOX ─────────────────────────────────────────────── -->
     <div class="pdp-info-col">
 
-      <!-- Collection eyebrow -->
-      <div class="pdp-eyebrow pdp-reveal" style="--delay:0s">
-        {%- if product.collections.first -%}
-          AURA /&nbsp;{{ product.collections.first.title }}
-        {%- else -%}
-          AURA Athletics
-        {%- endif -%}
+      <!-- Product name label -->
+      <div class="pdp-eyebrow pdp-reveal" style="--delay:0s">{{ product.title }}</div>
+
+      <!-- Marketing headline — the hook -->
+      <h1 class="pdp-title pdp-reveal" style="--delay:0.07s">
+        {{ section.settings.marketing_headline | default: 'The Last Training Short You&#39;ll Ever Buy.' }}
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="pdp-subhead pdp-reveal" style="--delay:0.13s">
+        {{ section.settings.marketing_subhead | default: 'Engineered for athletes who refuse to compromise. 42km tested. Zero chafe. Dry in minutes. Designed in Athens for those who train like they mean it.' }}
+      </p>
+
+      <!-- Inline trust bar -->
+      <div class="pdp-inline-trust pdp-reveal" style="--delay:0.18s">
+        <span class="pdp-inline-trust-stars">★★★★★</span>
+        <span class="pdp-inline-trust-score">{{ section.settings.review_score | default: '4.8' }} from {{ section.settings.review_count | default: '214' }} verified reviews</span>
+        <span class="pdp-inline-trust-sep">|</span>
+        <span>Free returns</span>
+        <span class="pdp-inline-trust-sep">|</span>
+        <span>Ships in 24h</span>
+        <span class="pdp-inline-trust-sep">|</span>
+        <span>2-year warranty</span>
       </div>
 
-      <!-- Title -->
-      <h1 class="pdp-title pdp-reveal" style="--delay:0.08s">{{ product.title }}</h1>
-
-      <!-- Price + rating -->
-      <div class="pdp-price-row pdp-reveal" style="--delay:0.14s">
+      <!-- Price row -->
+      <div class="pdp-price-row pdp-reveal" style="--delay:0.22s">
         <div class="pdp-price" id="pdp-price">
           {%- if current_variant.compare_at_price > current_variant.price -%}
             <span class="pdp-price-original">{{ current_variant.compare_at_price | money }}</span>
@@ -85,7 +99,7 @@
       </div>
 
       <!-- Urgency strip -->
-      <div class="pdp-urgency pdp-reveal" style="--delay:0.2s">
+      <div class="pdp-urgency pdp-reveal" style="--delay:0.27s">
         <div class="pdp-viewers">
           <span class="pdp-viewers-dot"></span>
           <span id="pdp-viewers-count">--</span>&nbsp;people viewing this right now
@@ -110,7 +124,7 @@
         <!-- Variant options -->
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
-            <div class="pdp-option-group pdp-reveal" style="--delay:{{ forloop.index | times: 0.06 | plus: 0.22 }}s">
+            <div class="pdp-option-group pdp-reveal" style="--delay:{{ forloop.index | times: 0.06 | plus: 0.3 }}s">
               <div class="pdp-option-label">
                 {{ option.name }}
                 {%- if option.name == 'Size' -%}
@@ -141,7 +155,7 @@
         {%- endunless -%}
 
         <!-- Qty + ATC -->
-        <div class="pdp-buy-row pdp-reveal" style="--delay:0.38s">
+        <div class="pdp-buy-row pdp-reveal" style="--delay:0.44s">
           <div class="pdp-qty">
             <button type="button" class="pdp-qty-btn" id="pdp-qty-minus" aria-label="Decrease quantity">−</button>
             <input type="number" name="quantity" id="pdp-qty-input" value="1" min="1" max="99" class="pdp-qty-input" aria-label="Quantity">
@@ -155,11 +169,14 @@
             {%- unless current_variant.available %} disabled aria-disabled="true"{%- endunless -%}
           >
             <span id="pdp-atc-label">
-              {%- if current_variant.available -%}Add to Bag{%- else -%}Sold Out{%- endif -%}
+              {%- if current_variant.available -%}Get Yours{%- else -%}Sold Out{%- endif -%}
             </span>
             <span class="pdp-atc-arrow">→</span>
           </button>
         </div>
+
+        <!-- ATC micro-copy -->
+        <p class="pdp-atc-microcopy pdp-reveal" style="--delay:0.5s">Try it risk-free. 60-day returns, no questions.</p>
 
         <!-- Dynamic checkout -->
         {%- if section.settings.show_dynamic_checkout -%}
@@ -170,7 +187,7 @@
       {%- endform -%}
 
       <!-- Trust strip -->
-      <div class="pdp-trust pdp-reveal" style="--delay:0.44s">
+      <div class="pdp-trust pdp-reveal" style="--delay:0.54s">
         <div class="pdp-trust-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <span>Secure checkout</span>
@@ -192,7 +209,9 @@
     </div><!-- /pdp-info-col -->
   </div><!-- /pdp-top -->
 
-  <!-- ── LIFESTYLE BENTO GRID ───────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════
+       LIFESTYLE BENTO GRID
+  ═══════════════════════════════════════════════════════════ -->
   <div class="pdp-bento">
     <div class="pdp-bento-hero">
       {%- if section.settings.bento_image_1 != blank -%}
@@ -221,7 +240,159 @@
     <div class="pdp-bento-banner"></div>
   </div>
 
-  <!-- ── PRODUCT DETAILS ACCORDION ─────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 1 — PAIN AMPLIFICATION
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="pdp-pain-section">
+    <div class="pdp-pain-inner">
+      <div class="pdp-section-label pdp-reveal">The problem</div>
+      <h2 class="pdp-pain-headline pdp-reveal">You've Settled Long&nbsp;Enough.</h2>
+      <div class="pdp-pain-body pdp-reveal">
+        <p>You know the feeling. The shorts that ride up three kilometres into your run. The cheap mesh that chafes your thighs raw on leg day. The "performance fabric" that clings to your skin the second you start sweating — and smells like a gym bag by the end of the session.</p>
+        <p>You've tried the big brands. The logo-covered gear that falls apart in two months. The "athletic fit" that's either too tight to move or too loose to look good. You keep buying replacements because nothing lasts.</p>
+        <p>It's not your fault. Most training shorts are designed in boardrooms, not built for bodies that actually move under&nbsp;load.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 2 — MECHANISM REVEAL
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="pdp-mechanism-section">
+    <div class="pdp-mechanism-inner">
+      <div class="pdp-section-label pdp-reveal">The solution</div>
+      <h2 class="pdp-mechanism-headline pdp-reveal">Designed Where Athletes Actually&nbsp;Train.</h2>
+      <div class="pdp-mechanism-body pdp-reveal">
+        <p>Aura was born in Athens — where athletes train year-round in 35°C heat. Every stitch, every seam, every fibre was tested where comfort isn't optional. It's survival.</p>
+        <p>The Aura Pro Training Short uses a proprietary cool-touch fabric that stays dry against your skin, doesn't cling when wet, and dries faster than anything you've worn. The tailored athletic cut moves with your body through squats, sprints, and marathons — without riding up, bunching, or restricting your range.</p>
+        <p>This isn't another pair of shorts with a logo. This is precision athletic engineering for people who take training&nbsp;seriously.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 3 — BENEFIT STACK
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="pdp-benefits-section">
+    <div class="pdp-benefits-inner">
+      <div class="pdp-section-label pdp-reveal">Why it works</div>
+      <h2 class="pdp-benefits-headline pdp-reveal">Built Different. In Every Way That Matters.</h2>
+      <div class="pdp-benefits-grid">
+
+        <div class="pdp-benefit-card pdp-reveal" style="--delay:0.05s">
+          <div class="pdp-benefit-num">01</div>
+          <div class="pdp-benefit-body">
+            <div class="pdp-benefit-feature">Cool-Touch Fabric Technology</div>
+            <div class="pdp-benefit-desc">Proprietary moisture-wicking fabric stays dry against your skin even in extreme heat. No cling. No stick. No distraction.</div>
+            <div class="pdp-benefit-feeling">You forget you're wearing them. All you feel is fast.</div>
+          </div>
+        </div>
+
+        <div class="pdp-benefit-card pdp-reveal" style="--delay:0.1s">
+          <div class="pdp-benefit-num">02</div>
+          <div class="pdp-benefit-body">
+            <div class="pdp-benefit-feature">Zero-Chafe Athletic Cut</div>
+            <div class="pdp-benefit-desc">Tailored fit with flatlock seams and strategic panelling. Full range of motion for squats, sprints, lunges — no riding up, no bunching, no inner-thigh burn at kilometre 30.</div>
+            <div class="pdp-benefit-feeling">The freedom to push harder without your gear fighting you.</div>
+          </div>
+        </div>
+
+        <div class="pdp-benefit-card pdp-reveal" style="--delay:0.15s">
+          <div class="pdp-benefit-num">03</div>
+          <div class="pdp-benefit-body">
+            <div class="pdp-benefit-feature">Rapid-Dry Construction</div>
+            <div class="pdp-benefit-desc">Fabric dries in minutes, not hours. Whether it's sweat or rain, the shorts recover before you do. No heavy, waterlogged fabric dragging you down.</div>
+            <div class="pdp-benefit-feeling">That light, second-skin sensation from start to finish.</div>
+          </div>
+        </div>
+
+        <div class="pdp-benefit-card pdp-reveal" style="--delay:0.2s">
+          <div class="pdp-benefit-num">04</div>
+          <div class="pdp-benefit-body">
+            <div class="pdp-benefit-feature">Built to Last — Guaranteed</div>
+            <div class="pdp-benefit-desc">No pilling, no fading, no stretching — backed by a 2-year warranty. While other shorts fall apart in 8 weeks, these look and perform the same after 200 sessions.</div>
+            <div class="pdp-benefit-feeling">The quiet confidence of owning gear that's as serious as you are.</div>
+          </div>
+        </div>
+
+        <div class="pdp-benefit-card pdp-reveal" style="--delay:0.25s">
+          <div class="pdp-benefit-num">05</div>
+          <div class="pdp-benefit-body">
+            <div class="pdp-benefit-feature">Functional Pockets That Actually Work</div>
+            <div class="pdp-benefit-desc">Secure, bounce-free pockets sized for modern phones. Your phone stays locked in on 20km runs. No bouncing, no adjusting, no arm band needed.</div>
+            <div class="pdp-benefit-feeling">One less thing to think about. Just run.</div>
+          </div>
+        </div>
+
+        <div class="pdp-benefit-card pdp-reveal" style="--delay:0.3s">
+          <div class="pdp-benefit-num">06</div>
+          <div class="pdp-benefit-body">
+            <div class="pdp-benefit-feature">Clean Design, No Logo Noise</div>
+            <div class="pdp-benefit-desc">Minimalist design with no oversized branding. Looks as good at brunch as it does at the box. Wear it from the gym to the street without changing.</div>
+            <div class="pdp-benefit-feeling">You look like someone who takes care of themselves — without trying.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 4 — FEATURED SOCIAL PROOF
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="pdp-quotes-section">
+    <div class="pdp-quotes-inner">
+      <div class="pdp-section-label pdp-reveal">Real athletes. Real results.</div>
+      <h2 class="pdp-quotes-headline pdp-reveal">Don't Take Our Word For It.</h2>
+      <div class="pdp-quotes-score pdp-reveal">
+        <span class="pdp-quotes-stars">★★★★★</span>
+        <span class="pdp-quotes-rating">{{ section.settings.review_score | default: '4.8' }} from {{ section.settings.review_count | default: '214' }} verified reviews</span>
+      </div>
+      <div class="pdp-quotes-grid">
+
+        <div class="pdp-quote-card pdp-reveal" style="--delay:0.05s">
+          <div class="pdp-quote-stars">★★★★★</div>
+          <p class="pdp-quote-text">"Best training shorts I've ever owned. I've tried everything from Nike to Lululemon. Nothing compares."</p>
+          <div class="pdp-quote-author">
+            <div class="pdp-quote-name">Marcus T.</div>
+            <div class="pdp-quote-label">Verified Buyer</div>
+          </div>
+        </div>
+
+        <div class="pdp-quote-card pdp-reveal" style="--delay:0.1s">
+          <div class="pdp-quote-stars">★★★★★</div>
+          <p class="pdp-quote-text">"Wore these at the Athens Classic Marathon. Comfortable from start to finish, zero chafe over 42km. That's the only endorsement you need."</p>
+          <div class="pdp-quote-author">
+            <div class="pdp-quote-name">Tom H.</div>
+            <div class="pdp-quote-label">Marathon PB Holder</div>
+          </div>
+        </div>
+
+        <div class="pdp-quote-card pdp-reveal" style="--delay:0.15s">
+          <div class="pdp-quote-stars">★★★★★</div>
+          <p class="pdp-quote-text">"I've recommended Aura to six people in my running club. All of them bought. All of them love it."</p>
+          <div class="pdp-quote-author">
+            <div class="pdp-quote-name">Maria V.</div>
+            <div class="pdp-quote-label">Running Club Captain</div>
+          </div>
+        </div>
+
+        <div class="pdp-quote-card pdp-reveal" style="--delay:0.2s">
+          <div class="pdp-quote-stars">★★★★★</div>
+          <p class="pdp-quote-text">"Three people asked where I got these at a race. Premium without the premium attitude."</p>
+          <div class="pdp-quote-author">
+            <div class="pdp-quote-name">Emma W.</div>
+            <div class="pdp-quote-label">Triathlete</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PRODUCT DETAILS ACCORDION
+  ═══════════════════════════════════════════════════════════ -->
   <div class="pdp-details" id="pdp-details">
 
     <div class="pdp-accordion-item open">
@@ -272,12 +443,120 @@
 
   </div>
 
-  <!-- ── REVIEWS ────────────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════
+       REVIEWS
+  ═══════════════════════════════════════════════════════════ -->
   <div class="pdp-reviews-section">
     {% render 'product-reviews' %}
   </div>
 
-  <!-- ── SUGGESTED PRODUCTS ─────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 5 — GUARANTEE / RISK REVERSAL
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="pdp-guarantee-section">
+    <div class="pdp-guarantee-inner">
+      <div class="pdp-guarantee-badge pdp-reveal">60-Day Guarantee</div>
+      <h2 class="pdp-guarantee-headline pdp-reveal">Try Them For 60 Days. If You're Not Obsessed, We'll Refund Every Penny.</h2>
+      <p class="pdp-guarantee-body pdp-reveal">We're so confident these are the best training shorts you'll ever own that we'll take all the risk. Wear them. Train in them. Race in them. Put them through hell.</p>
+      <p class="pdp-guarantee-body pdp-reveal">If they're not the most comfortable, best-performing shorts in your rotation after 60 days — send them back. Full refund. No questions. No forms. No hassle.</p>
+      <p class="pdp-guarantee-emphasis pdp-reveal">You risk nothing. We risk everything. That's how confident we are.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 6 — FINAL CTA
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="pdp-finalcta-section">
+    <div class="pdp-finalcta-inner">
+      <h2 class="pdp-finalcta-headline pdp-reveal">Your Next Session Deserves Better Gear.</h2>
+      <p class="pdp-finalcta-body pdp-reveal">You're one pair of shorts away from never thinking about what you're wearing mid-workout again. Zero chafe. Bone dry. Built to last years.</p>
+      <div class="pdp-finalcta-btn-wrap pdp-reveal">
+        <button class="pdp-atc pdp-finalcta-btn" id="pdp-finalcta-btn" type="button">
+          <span>Get Yours</span>
+          <span class="pdp-atc-arrow">→</span>
+        </button>
+        <p class="pdp-finalcta-microcopy">Free shipping &middot; 60-day risk-free guarantee &middot; 2-year warranty</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 7 — FAQ (OBJECTION KILLERS)
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="pdp-faq-section">
+    <div class="pdp-faq-inner">
+      <div class="pdp-section-label pdp-reveal">Common questions</div>
+      <h2 class="pdp-faq-headline pdp-reveal">Everything You Want to Know.</h2>
+
+      <div class="pdp-faq-list" id="pdp-faq-list">
+
+        <div class="pdp-accordion-item open">
+          <button class="pdp-accordion-trigger" type="button" aria-expanded="true">
+            <span>What makes these different from Nike / Lululemon / Under Armour?</span>
+            <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="pdp-accordion-body">
+            <div class="pdp-accordion-inner">
+              <p>Most big-brand shorts are designed for marketing, not movement. Aura Pro shorts are developed and tested by athletes training in extreme Mediterranean heat. The cool-touch fabric, tailored cut, and flatlock seams eliminate the three biggest complaints athletes have: chafing, cling, and poor durability. Our 214 five-star reviews from marathon runners, CrossFitters, and triathletes speak louder than any logo.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pdp-accordion-item">
+          <button class="pdp-accordion-trigger" type="button" aria-expanded="false">
+            <span>Are they worth the price?</span>
+            <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="pdp-accordion-body">
+            <div class="pdp-accordion-inner">
+              <p>How much have you spent replacing cheap shorts that fall apart every few months? The Aura Pro is a one-time investment backed by a 2-year warranty. No pilling, no fading, no stretching. Customers report wearing the same pair for 200+ sessions. Do the math — this is the cheapest short you'll ever own per wear.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pdp-accordion-item">
+          <button class="pdp-accordion-trigger" type="button" aria-expanded="false">
+            <span>How do they fit?</span>
+            <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="pdp-accordion-body">
+            <div class="pdp-accordion-inner">
+              <p>Athletic tailored fit — close to the body without being compression-tight. Designed to move with you through squats, sprints, and distance runs. If you're between sizes, we recommend sizing up for a more relaxed feel. Check our <a href="/pages/size-guide">sizing guide</a> for exact measurements.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pdp-accordion-item">
+          <button class="pdp-accordion-trigger" type="button" aria-expanded="false">
+            <span>Can I wear these outside the gym?</span>
+            <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="pdp-accordion-body">
+            <div class="pdp-accordion-inner">
+              <p>Absolutely. The clean, logo-free design looks sharp from the gym to the coffee shop. Multiple customers mention wearing them casually without a second thought.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pdp-accordion-item">
+          <button class="pdp-accordion-trigger" type="button" aria-expanded="false">
+            <span>What if they don't work for me?</span>
+            <svg class="pdp-accordion-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="pdp-accordion-body">
+            <div class="pdp-accordion-inner">
+              <p>Send them back within 60 days for a full refund. No questions. No hoops. We cover return shipping. The only risk is wondering why you didn't try them sooner.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SUGGESTED PRODUCTS
+  ═══════════════════════════════════════════════════════════ -->
   {%- if section.settings.suggested_collection != blank -%}
     {%- assign sugg_col = collections[section.settings.suggested_collection] -%}
     {%- if sugg_col != blank -%}
@@ -310,7 +589,7 @@
 
 </div><!-- /pdp-wrap -->
 
-<!-- ── MOBILE STICKY ATC ────────────────────────────────── -->
+<!-- ── MOBILE STICKY ATC ─────────────────────────────────────── -->
 <div class="pdp-sticky-atc" id="pdp-sticky-atc" aria-hidden="true">
   <div class="pdp-sticky-inner">
     <div class="pdp-sticky-info">
@@ -318,13 +597,13 @@
       <div class="pdp-sticky-price" id="pdp-sticky-price">{{ current_variant.price | money }}</div>
     </div>
     <button class="pdp-atc pdp-sticky-btn" id="pdp-sticky-btn" type="button">
-      <span>Add to Bag</span>
+      <span>Get Yours</span>
       <span class="pdp-atc-arrow">→</span>
     </button>
   </div>
 </div>
 
-<!-- ── VARIANT DATA ────────────────────────────────────── -->
+<!-- ── VARIANT DATA ──────────────────────────────────────────── -->
 <script>
   window.__pdpData = {
     productId: {{ product.id }},
@@ -351,6 +630,22 @@
 {
   "name": "Product Page",
   "settings": [
+    {
+      "type": "header",
+      "content": "Above the Fold Copy"
+    },
+    {
+      "type": "text",
+      "id": "marketing_headline",
+      "label": "Marketing headline (H1)",
+      "default": "The Last Training Short You'll Ever Buy."
+    },
+    {
+      "type": "textarea",
+      "id": "marketing_subhead",
+      "label": "Subheadline",
+      "default": "Engineered for athletes who refuse to compromise. 42km tested. Zero chafe. Dry in minutes. Designed in Athens for those who train like they mean it."
+    },
     {
       "type": "header",
       "content": "Social Proof"
@@ -426,7 +721,7 @@
     },
     {
       "type": "header",
-      "content": "Accordion"
+      "content": "Product Detail Accordion"
     },
     {
       "type": "text",
