@@ -56,13 +56,13 @@
     <!-- ── BUY BOX ─────────────────────────────────────────────── -->
     <div class="pdp-info-col">
 
-      <!-- Product name label -->
-      <div class="pdp-eyebrow pdp-reveal" style="--delay:0s">{{ product.title }}</div>
+      <!-- Product name — h1 for SEO, visually styled as eyebrow -->
+      <h1 class="pdp-eyebrow pdp-reveal" style="--delay:0s">{{ product.title }}</h1>
 
-      <!-- Marketing headline — the hook -->
-      <h1 class="pdp-title pdp-reveal" style="--delay:0.07s">
+      <!-- Marketing hook — visually prominent, not an h1 -->
+      <p class="pdp-title pdp-reveal" style="--delay:0.07s">
         {{ section.settings.marketing_headline | default: 'The Last Training Short You&#39;ll Ever Buy.' }}
-      </h1>
+      </p>
 
       <!-- Subheadline -->
       <p class="pdp-subhead pdp-reveal" style="--delay:0.13s">
@@ -625,6 +625,120 @@
   };
 </script>
 <script src="{{ 'product-urgency.js' | asset_url }}" defer></script>
+
+<!-- ── PRODUCT STRUCTURED DATA (JSON-LD) ──────────────────── -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ canonical_url | json }},
+    "description": {{ product.description | strip_html | truncate: 500 | json }},
+    "image": [
+      {%- for image in product.images -%}
+        {{ image | image_url: width: 1200 | prepend: "https:" | json }}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | default: shop.name | json }}
+    },
+    {%- if current_variant.sku != blank -%}
+    "sku": {{ current_variant.sku | json }},
+    {%- endif -%}
+    "offers": {
+      "@type": "Offer",
+      "url": {{ canonical_url | json }},
+      "priceCurrency": {{ shop.currency | json }},
+      "price": {{ current_variant.price | times: 0.01 }},
+      "priceValidUntil": "2027-12-31",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": {%- if current_variant.available -%}"https://schema.org/InStock"{%- else -%}"https://schema.org/OutOfStock"{%- endif -%},
+      "seller": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }}
+      }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "{{ section.settings.review_score | default: '4.8' }}",
+      "reviewCount": "{{ section.settings.review_count | default: '214' }}",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "name": "Best training shorts I've ever owned",
+        "reviewBody": "I've tried everything from Nike to Lululemon. Nothing compares to the fit and feel of these. The fabric moves with you — zero restriction, zero chafe. Training in 35°C Athens heat and they still feel dry.",
+        "author": { "@type": "Person", "name": "Marcus T." },
+        "datePublished": "2026-02-01",
+        "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+      },
+      {
+        "@type": "Review",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "name": "Finally — gear that actually performs",
+        "reviewBody": "Ordered for marathon training and these have been on every single long run. Lightweight, supportive, and the pockets actually hold a phone without bouncing. Completely sold.",
+        "author": { "@type": "Person", "name": "Sofia L." },
+        "datePublished": "2026-02-01",
+        "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+      },
+      {
+        "@type": "Review",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "name": "Race day gear sorted",
+        "reviewBody": "Wore these at the Athens Classic Marathon. Comfortable from start to finish, zero chafe issues over 42km. That's the only endorsement you need.",
+        "author": { "@type": "Person", "name": "Tom H." },
+        "datePublished": "2025-11-01",
+        "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+      },
+      {
+        "@type": "Review",
+        "reviewRating": { "@type": "Rating", "ratingValue": "4", "bestRating": "5" },
+        "name": "Really impressed — one small note",
+        "reviewBody": "Quality is exceptional and the fit is spot on for my body type. Only reason for 4 stars is that I wish there were more colourways.",
+        "author": { "@type": "Person", "name": "Anna N." },
+        "datePublished": "2026-01-01",
+        "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": {{ shop.url | json }}
+      }
+      {%- if product.collections.first != blank -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ product.collections.first.title | json }},
+        "item": {{ product.collections.first.url | prepend: shop.url | json }}
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": {{ product.title | json }}
+      }
+      {%- else -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ product.title | json }}
+      }
+      {%- endif -%}
+    ]
+  }
+]
+</script>
 
 {% schema %}
 {

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#FDFBF7">
 
+  <!-- ── TITLE ───────────────────────────────────────────── -->
   <title>
     {%- if page_title == blank -%}
       {{ shop.name }}
@@ -13,23 +14,97 @@
     {%- endif -%}
   </title>
 
-  {%- if page_description -%}
+  <!-- ── META DESCRIPTION ────────────────────────────────── -->
+  {%- if page_description != blank -%}
     <meta name="description" content="{{ page_description | escape }}">
+  {%- elsif request.page_type == 'product' -%}
+    <meta name="description" content="{{ product.description | strip_html | truncate: 155 | escape }}">
+  {%- elsif request.page_type == 'collection' -%}
+    <meta name="description" content="{{ collection.description | strip_html | truncate: 155 | default: shop.description | escape }}">
+  {%- else -%}
+    <meta name="description" content="{{ shop.description | escape }}">
   {%- endif -%}
 
-  {%- if settings.favicon != blank -%}
-    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  <!-- ── ROBOTS ───────────────────────────────────────────── -->
+  {%- if request.page_type == 'password' or request.page_type == 'gift_card' -%}
+    <meta name="robots" content="noindex, nofollow">
+  {%- else -%}
+    <meta name="robots" content="index, follow">
   {%- endif -%}
 
-  <!-- Canonical -->
+  <!-- ── CANONICAL ────────────────────────────────────────── -->
   <link rel="canonical" href="{{ canonical_url }}">
 
-  <!-- DM Sans — body font -->
+  <!-- ── OPEN GRAPH ───────────────────────────────────────── -->
+  {%- assign og_title = page_title | default: shop.name -%}
+  {%- if page_description != blank -%}
+    {%- assign og_description = page_description | strip_html | truncate: 200 -%}
+  {%- elsif request.page_type == 'product' -%}
+    {%- assign og_description = product.description | strip_html | truncate: 200 -%}
+  {%- else -%}
+    {%- assign og_description = shop.description | truncate: 200 -%}
+  {%- endif -%}
+
+  {%- if request.page_type == 'product' and product.featured_image -%}
+    {%- assign og_image = product.featured_image | image_url: width: 1200 -%}
+    {%- assign og_type = 'product' -%}
+  {%- elsif request.page_type == 'collection' and collection.featured_image -%}
+    {%- assign og_image = collection.featured_image | image_url: width: 1200 -%}
+    {%- assign og_type = 'website' -%}
+  {%- elsif request.page_type == 'article' and article.image -%}
+    {%- assign og_image = article.image | image_url: width: 1200 -%}
+    {%- assign og_type = 'article' -%}
+  {%- elsif settings.og_image != blank -%}
+    {%- assign og_image = settings.og_image | image_url: width: 1200 -%}
+    {%- assign og_type = 'website' -%}
+  {%- else -%}
+    {%- assign og_type = 'website' -%}
+  {%- endif -%}
+
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:title" content="{{ og_title | escape }}">
+  <meta property="og:description" content="{{ og_description | escape }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' }}">
+  {%- if og_image -%}
+    <meta property="og:image" content="https:{{ og_image }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ og_title | escape }}">
+  {%- endif -%}
+  {%- if request.page_type == 'product' -%}
+    <meta property="product:price:amount" content="{{ product.price | times: 0.01 }}">
+    <meta property="product:price:currency" content="{{ shop.currency }}">
+  {%- endif -%}
+
+  <!-- ── TWITTER CARD ──────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ og_title | escape }}">
+  <meta name="twitter:description" content="{{ og_description | escape }}">
+  {%- if og_image -%}
+    <meta name="twitter:image" content="https:{{ og_image }}">
+    <meta name="twitter:image:alt" content="{{ og_title | escape }}">
+  {%- endif -%}
+
+  <!-- ── FAVICONS ──────────────────────────────────────────── -->
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ settings.favicon | image_url: width: 16, height: 16 }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+  {%- endif -%}
+
+  <!-- ── PRECONNECT ────────────────────────────────────────── -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 
-  <!-- PPEditorialNew — editorial/display font (loaded via asset_url) -->
+  <!-- ── FONTS ─────────────────────────────────────────────── -->
+  <!-- DM Sans — body font -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"></noscript>
+
+  <!-- PPEditorialNew — display/editorial font -->
   <style>
     @font-face {
       font-family: 'PPEditorialNew';
@@ -72,10 +147,41 @@
   {{ 'theme.css' | asset_url | stylesheet_tag }}
 
   {{ content_for_header }}
+
+  <!-- ── GLOBAL STRUCTURED DATA ────────────────────────────── -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ settings.favicon | image_url: width: 512 | prepend: "https:" | json }}
+      },
+      "sameAs": []
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": {{ shop.url | append: "/search?q={search_term_string}" | json }}
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+  </script>
 </head>
 
 <body>
-  <!-- Header (rendered as a standalone section) -->
+  <!-- Header -->
   {% section 'header' %}
 
   <!-- Main content -->
@@ -83,7 +189,7 @@
     {{ content_for_layout }}
   </main>
 
-  <!-- Footer (rendered as a standalone section) -->
+  <!-- Footer -->
   {% section 'footer' %}
 
   <!-- Theme JS -->

@@ -1616,11 +1616,14 @@ body {
 
 /* Eyebrow */
 .pdp-eyebrow {
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.68rem;
+  font-weight: 400;
+  line-height: 1;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--pdp-muted);
-  margin-bottom: 1.25rem;
+  margin: 0 0 1.25rem;
 }
 
 /* Title — editorial, ultralight serif */
